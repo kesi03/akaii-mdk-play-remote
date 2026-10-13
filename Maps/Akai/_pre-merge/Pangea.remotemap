@@ -1,0 +1,56 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  Pangea World Instruments
+//
+//  Pads      -> reserved (filter/amp envelope templates below)
+//  Knobs 1-4A-> filter & amp velocity      (CC21-24)
+//  Knobs 1-4B-> delay & reverb             (CC25-28)
+//  Joystick X-> (no pitch bend; retargetable via override)
+//  Joystick Y-> (no mod wheel; retargetable via override)
+//  Keyboard  -> Keyboard
+//
+//  NOTE: Pangea remotable item names use underscores.
+//======================================================================
+
+Scope	Propellerhead Software	se.propellerheads.Pangea
+// Define Group	Keyboard Shortcut Variations	Filter	Amp
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Pangea"
+Map	Keyboard		Keyboard
+
+// --- Pads (reserved) ---------------------------------
+// Pangea has no drum pads; ready-to-enable templates:
+// Map Pad 1		Filter_Attack
+// Map Pad 2		Filter_Decay
+// Map Pad 3		Filter_Sustain
+// Map Pad 4		Filter_Release
+// Map Pad 5		Amp_Attack
+// Map Pad 6		Amp_Decay
+// Map Pad 7		Amp_Sustain
+// Map Pad 8		Amp_Release
+
+// --- Knob Bank A (CC21-24): filter & velocity --------
+Map	Knob 1 A		Filter_Cutoff
+Map	Knob 2 A		Filter_Reso
+Map	Knob 3 A		Filter_Env
+Map	Knob 4 A		Amp_Velocity
+
+// --- Knob Bank B (CC25-28): delay & reverb -----------
+Map	Knob 1 B		Synced_Delay_Time
+Map	Knob 2 B		Delay_Feedback
+Map	Knob 3 B		Reverb_Time
+Map	Knob 4 B		Reverb_PreDelay
+
+// --- Joystick / wheels -------------------------------
+// Pangea exposes no pitch bend or mod wheel remotables;
+// use Remote Overrides to re-point these if the device
+// accepts pitch-bend input from the joystick:
+//Map	Joystick X		Pitch Bend
+//Map	Joystick Y		Filter_Env

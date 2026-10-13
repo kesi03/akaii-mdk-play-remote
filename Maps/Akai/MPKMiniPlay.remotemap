@@ -1,0 +1,431 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.1.0
+
+
+//======================================================================
+//  Akai MPK Mini Play - combined Remote map
+//
+//  Reason loads every scope for a control surface from a single .remotemap.
+//
+//  Keyboard : 25 keys, mapped once in the Master Keyboard scope.
+//  Joystick : X = Pitch Bend, Y = Mod Wheel (mapped once, globally).
+//  Knobs    : Bank A (CC48-51) + Bank B (CC64-67), mapped per device below.
+//  Pads     : NOT mapped here. The 16 pads are drum-note triggers - the
+//             codec re-emits Bank A as notes 36-43 and Bank B as notes
+//             44-51 through the Keyboard item, so the focused drum device
+//             (Kong, Redrum) plays them and other devices ignore them.
+//======================================================================
+
+Scope	Propellerheads	Master Keyboard
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+Map	Keyboard		Keyboard
+Map	Joystick X		Pitch Bend
+Map	Joystick Y		Mod Wheel
+
+Scope	Propellerheads	Combinator
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Combinator"
+
+
+// --- Knob Bank A (CC48-51): rotaries -----------------
+Map	Knob 1 A		Rotary 1
+Map	Knob 2 A		Rotary 2
+Map	Knob 3 A		Rotary 3
+Map	Knob 4 A		Rotary 4
+
+// --- Knob Bank B (CC64-67): global/patch controls ----
+Map	Knob 1 B		Enabled
+Map	Knob 2 B		Run Pattern Devices
+Map	Knob 3 B		Bypass All FX
+Map	Knob 4 B		Select Patch Delta
+
+Scope	Propellerheads	Dr.REX Loop Player
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Dr. Octo Rex"
+
+
+// --- Knob Bank A (CC48-51): filter & filter envelope ----
+Map	Knob 1 A		Filter Freq
+Map	Knob 2 A		Filter Res
+Map	Knob 3 A		Filter Env Amount
+Map	Knob 4 A		LFO1 Rate
+
+// --- Knob Bank B (CC64-67): LFO shaping ---------------
+Map	Knob 1 B		LFO1 Amount
+Map	Knob 2 B		Filter Mode
+Map	Knob 3 B		LFO1 Wave
+Map	Knob 4 B		LFO1 Dest
+
+Scope	Propellerhead Software	se.propellerheads.Europa
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Europa"
+
+
+// --- Knob Bank A (CC48-51): filter & master ----------
+Map	Knob 1 A		Filter Drive
+Map	Knob 2 A		Filter Reso
+Map	Knob 3 A		Filter Freq
+Map	Knob 4 A		Master Volume
+
+// --- Knob Bank B (CC64-67): amplitude envelope -------
+Map	Knob 1 B		Amp Attack
+Map	Knob 2 B		Amp Decay
+Map	Knob 3 B		Amp Sustain
+Map	Knob 4 B		Amp Release
+
+Scope	Propellerhead Software	se.propellerheads.Grain
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Grain"
+
+
+// --- Knob Bank A (CC48-51): sample & filter ----------
+Map	Knob 1 A		Sample Level
+Map	Knob 2 A		Osc Level
+Map	Knob 3 A		Filter Freq
+Map	Knob 4 A		Filter Reso
+
+// --- Knob Bank B (CC64-67): amplitude envelope -------
+Map	Knob 1 B		Amp Attack
+Map	Knob 2 B		Amp Decay
+Map	Knob 3 B		Amp Sustain
+Map	Knob 4 B		Amp Release
+
+Scope	Propellerhead Software	se.propellerheads.Humana
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Humana"
+
+
+// --- Knob Bank A (CC48-51): filter & velocity --------
+Map	Knob 1 A		Filter_Cutoff
+Map	Knob 2 A		Filter_Reso
+Map	Knob 3 A		Filter_Env
+Map	Knob 4 A		Amp_Velocity
+
+// --- Knob Bank B (CC64-67): delay & reverb -----------
+Map	Knob 1 B		Synced_Delay_Time
+Map	Knob 2 B		Delay_Feedback
+Map	Knob 3 B		Reverb_Time
+Map	Knob 4 B		Reverb_PreDelay
+
+// use Remote Overrides to re-point these if the device
+
+Scope	Propellerheads	ID8 Instrument Device
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"ID8"
+
+
+// --- Knob Bank A (CC48-51): ID8 parameters -----------
+Map	Knob 1 A		Volume
+Map	Knob 2 A		Parameter 1
+Map	Knob 3 A		Parameter 2
+// Map Knob 4 A		Volume
+
+// --- Knob Bank B (CC64-67): reserved -----------------
+// ID8 exposes only Volume / Parameter 1 / Parameter 2;
+// ready-to-enable repeat templates:
+// Map Knob 1 B		Volume
+// Map Knob 2 B		Parameter 1
+// Map Knob 3 B		Parameter 2
+
+Scope	Propellerhead Software	se.propellerheads.Klang
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Klang"
+
+
+// --- Knob Bank A (CC48-51): filter & velocity --------
+Map	Knob 1 A		Filter_Cutoff
+Map	Knob 2 A		Filter_Reso
+Map	Knob 3 A		Filter_Env
+Map	Knob 4 A		Amp_Velocity
+
+// --- Knob Bank B (CC64-67): delay & reverb -----------
+Map	Knob 1 B		Synced_Delay_Time
+Map	Knob 2 B		Delay_Feedback
+Map	Knob 3 B		Reverb_Time
+Map	Knob 4 B		Reverb_PreDelay
+
+// use Remote Overrides to re-point these if the device
+
+Scope	Propellerheads	Kong Drum Designer
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"KONG"
+
+
+// Uncomment once you add a drum-dedicated second Kong or a Redrum duo.
+
+// --- Knob Bank A (CC48-51): master section ----------
+Map	Knob 1 A		Master Level
+Map	Knob 2 A		Master FX P1
+Map	Knob 3 A		Master FX P2
+Map	Knob 4 A		Master FX On
+
+// --- Knob Bank B (CC64-67): bus/FX section ----------
+Map	Knob 1 B		Bus FX P1
+Map	Knob 2 B		Bus FX P2
+Map	Knob 3 B		Bus FX On
+Map	Knob 4 B		Level Bus FX to Master FX
+
+
+// --- Patch navigation (needs a spare button; default off) ---
+
+Scope	Propellerheads	Malstrom Graintable Synthesizer
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Malstrom"
+
+
+// --- Knob Bank A (CC48-51): filter section -----------
+Map	Knob 1 A		Filter A Freq
+Map	Knob 2 A		Filter A Resonance
+Map	Knob 3 A		Filter B Freq
+Map	Knob 4 A		Filter B Resonance
+
+// --- Knob Bank B (CC64-67): modulators & motion ------
+Map	Knob 1 B		Modulator A Rate
+Map	Knob 2 B		Modulator B Rate
+Map	Knob 3 B		Oscillator A Motion
+Map	Knob 4 B		Oscillator B Motion
+
+Scope	Propellerheads	Mixer 14:2
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Mixer 14:2"
+
+// --- Knob Bank A (CC48-51): channel levels -----------
+Map	Knob 1 A		Channel 1 Level
+Map	Knob 2 A		Channel 2 Level
+Map	Knob 3 A		Channel 3 Level
+Map	Knob 4 A		Channel 4 Level
+
+// --- Knob Bank B (CC64-67): channel pans -------------
+Map	Knob 1 B		Channel 1 Pan
+Map	Knob 2 B		Channel 2 Pan
+Map	Knob 3 B		Channel 3 Pan
+Map	Knob 4 B		Channel 4 Pan
+
+
+//----------------------------------------------------------------------
+//  Master Section (base channels) - second scope in this file
+//----------------------------------------------------------------------
+
+Scope	Propellerheads	Reason Master Section
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Master"
+
+// --- Knob Bank A (CC48-51): base channel levels ------
+Map	Knob 1 A		Channel 1 Level
+Map	Knob 2 A		Channel 2 Level
+Map	Knob 3 A		Channel 3 Level
+Map	Knob 4 A		Channel 4 Level
+
+// --- Knob Bank B (CC64-67): base channel pans --------
+Map	Knob 1 B		Channel 1 Pan
+Map	Knob 2 B		Channel 2 Pan
+Map	Knob 3 B		Channel 3 Pan
+Map	Knob 4 B		Channel 4 Pan
+
+Scope	Propellerhead Software	se.propellerheads.Monotone
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Monotone"
+
+
+// --- Knob Bank A (CC48-51): voice & filter -----------
+Map	Knob 1 A		Osc Mix
+Map	Knob 2 A		Filter Freq
+Map	Knob 3 A		Filter Reso
+Map	Knob 4 A		Filter Vel
+
+// --- Knob Bank B (CC64-67): amp envelope -------------
+Map	Knob 1 B		Amp Attack
+Map	Knob 2 B		Amp Decay
+Map	Knob 3 B		Amp Sustain
+Map	Knob 4 B		Amp Release
+
+Scope	Propellerheads	NN19 Digital Sampler
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"NN-19"
+
+
+// --- Knob Bank A (CC48-51): filter & LFO ---
+Map	Knob 1 A		Filter Freq
+Map	Knob 2 A		Filter Res
+Map	Knob 3 A		Filter Env Amount
+Map	Knob 4 A		LFO Rate
+
+// --- Knob Bank B (CC64-67): amp envelope ---------
+Map	Knob 1 B		Amp Env Attack
+Map	Knob 2 B		Amp Env Decay
+Map	Knob 3 B		Amp Env Sustain
+Map	Knob 4 B		Amp Env Release
+
+Scope	Propellerheads	NN-XT Advanced Sampler
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"NN-XT"
+
+
+// --- Knob Bank A (CC48-51): filter & amp shape ---
+Map	Knob 1 A		Filter Freq
+Map	Knob 2 A		Filter Res
+Map	Knob 3 A		Amp Env Attack
+Map	Knob 4 A		Amp Env Decay
+
+// --- Knob Bank B (CC64-67): release & output ---------
+Map	Knob 1 B		Amp Env Release
+Map	Knob 2 B		Mod Env Decay
+Map	Knob 3 B		External Controller
+Map	Knob 4 B		Master Volume
+
+Scope	Propellerhead Software	se.propellerheads.Pangea
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Pangea"
+
+
+// --- Knob Bank A (CC48-51): filter & velocity --------
+Map	Knob 1 A		Filter_Cutoff
+Map	Knob 2 A		Filter_Reso
+Map	Knob 3 A		Filter_Env
+Map	Knob 4 A		Amp_Velocity
+
+// --- Knob Bank B (CC64-67): delay & reverb -----------
+Map	Knob 1 B		Synced_Delay_Time
+Map	Knob 2 B		Delay_Feedback
+Map	Knob 3 B		Reverb_Time
+Map	Knob 4 B		Reverb_PreDelay
+
+// use Remote Overrides to re-point these if the device
+
+Scope	Propellerhead Software	se.propellerheads.radicalkeys
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Radical Keys"
+
+
+// --- Knob Bank A (CC48-51): tone & blend ------------
+Map	Knob 1 A		Character
+Map	Knob 2 A		Instrument Blend
+Map	Knob 3 A		Vel Resp Curve
+Map	Knob 4 A		Master Volume
+
+// --- Knob Bank B (CC64-67): envelope & dynamics -----
+Map	Knob 1 B		Env Attack
+Map	Knob 2 B		Env Decay Curve
+Map	Knob 3 B		Env Release
+Map	Knob 4 B		Comp Amount
+
+// Radical Keys responds to Pitch Bend and Sustain Pedal but exposes
+// to a continuous destination such as Ambience Level if desired:
+
+Scope	Propellerhead Software	se.propellerheads.radicalpiano
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Radical Piano"
+
+
+// --- Knob Bank A (CC48-51): character & mics ---------
+Map	Knob 1 A		Character
+Map	Knob 2 A		Microphone 1 Type
+Map	Knob 3 A		Microphone and Instrument Blend
+Map	Knob 4 A		Microphone 2 Type
+
+// --- Knob Bank B (CC64-67): envelope & master --------
+Map	Knob 1 B		Env Attack
+Map	Knob 2 B		Env Decay Curve
+Map	Knob 3 B		Env Release
+Map	Knob 4 B		Master Volume
+
+// Radical Piano responds to Pitch Bend and Sustain Pedal but exposes
+// to a continuous destination if desired:
+
+Scope	Propellerheads	Redrum Drum Computer
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Redrum"
+
+
+// --- Knob Bank A (CC48-51): channel levels -----------
+Map	Knob 1 A		Drum 1 Level
+Map	Knob 2 A		Drum 2 Level
+Map	Knob 3 A		Drum 3 Level
+Map	Knob 4 A		Drum 4 Level
+
+// --- Knob Bank B (CC64-67): channel pans -------------
+Map	Knob 1 B		Drum 1 Pan
+Map	Knob 2 B		Drum 2 Pan
+Map	Knob 3 B		Drum 3 Pan
+Map	Knob 4 B		Drum 4 Pan
+
+// deliberately left commented; use Remote Overrides to re-point them.
+
+Scope	Propellerhead Software	se.propellerheads.DMFC
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Rytmik"
+
+
+// --- Knob Bank A (CC48-51): channel levels 1-4 -------
+Map	Knob 1 A		Drum_1_Volume
+Map	Knob 2 A		Drum_2_Volume
+Map	Knob 3 A		Drum_3_Volume
+Map	Knob 4 A		Drum_4_Volume
+
+// --- Knob Bank B (CC64-67): channel levels 5-8 -------
+Map	Knob 1 B		Drum_5_Volume
+Map	Knob 2 B		Drum_6_Volume
+Map	Knob 3 B		Drum_7_Volume
+Map	Knob 4 B		Drum_8_Volume
+
+// deliberately left commented; use Remote Overrides to re-point them to
+// Master_Pitch / Master_Reverb / Master_Filter if desired.
+
+Scope	Propellerheads	SubTractor Analog Synthesizer
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"SubTractor"
+
+// below are ready-to-enable if you retarget them via Remote Overrides.
+
+// --- Knob Bank A (CC48-51): filter & modulation ------
+Map	Knob 1 A		Filter Freq
+Map	Knob 2 A		Filter Res
+Map	Knob 3 A		Filter Env Amount
+Map	Knob 4 A		LFO1 Rate
+
+// --- Knob Bank B (CC64-67): amplitude envelope --------
+Map	Knob 1 B		Amp Env Attack
+Map	Knob 2 B		Amp Env Decay
+Map	Knob 3 B		Amp Env Sustain
+Map	Knob 4 B		Amp Env Release
+
+Scope	Propellerheads	THOR Polysonic Synthesizer
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Thor"
+
+
+// --- Knob Bank A (CC48-51): filters ------------------
+Map	Knob 1 A		Filter 1 Freq
+Map	Knob 2 A		Filter 1 Res
+Map	Knob 3 A		Filter 2 Freq
+Map	Knob 4 A		Filter 2 Res
+
+// --- Knob Bank B (CC64-67): amplitude envelope -------
+Map	Knob 1 B		Amp Env Attack
+Map	Knob 2 B		Amp Env Decay
+Map	Knob 3 B		Amp Env Sustain
+Map	Knob 4 B		Amp Env Release

@@ -1,0 +1,75 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  Mixer 14:2  +  Reason Master Section
+//
+//  Mixer 14:2 scope:
+//  Knobs 1-4A -> Channel 1-4 Level   (CC21-24)
+//  Knobs 1-4B -> Channel 1-4 Pan     (CC25-28)
+//  Joystick X -> Pitch Bend (retargetable)
+//  Joystick Y -> Master Level (retargetable)
+//
+//  Reason Master Section scope:
+//  Knobs 1-4A -> Base Channel 1-4 Level (CC21-24)
+//  Knobs 1-4B -> Base Channel 1-4 Pan   (CC25-28)
+//======================================================================
+
+Scope	Propellerheads	Mixer 14:2
+// Define Group	Keyboard Shortcut Variations	Level 1-7	Level 8-14	Send 1 1-7	Send 1 8-14	Pan 1-7	Pan 8-14
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Mixer 14:2"
+
+// --- Knob Bank A (CC21-24): channel levels -----------
+Map	Knob 1 A		Channel 1 Level
+Map	Knob 2 A		Channel 2 Level
+Map	Knob 3 A		Channel 3 Level
+Map	Knob 4 A		Channel 4 Level
+
+// --- Knob Bank B (CC25-28): channel pans -------------
+Map	Knob 1 B		Channel 1 Pan
+Map	Knob 2 B		Channel 2 Pan
+Map	Knob 3 B		Channel 3 Pan
+Map	Knob 4 B		Channel 4 Pan
+
+// --- Joystick ----------------------------------------
+Map	Joystick Y		Master Level
+
+// Pads & keyboard have no direct mixer role (keys feed the selected
+// instrumented channel). Pads can be retargeted to aux sends:
+//Map	Pad 1		Channel 1 Aux 1 Send
+//Map	Pad 2		Channel 2 Aux 1 Send
+//Map	Pad 3		Channel 3 Aux 1 Send
+//Map	Pad 4		Channel 4 Aux 1 Send
+
+
+//----------------------------------------------------------------------
+//  Master Section (base channels) - second scope in this file
+//----------------------------------------------------------------------
+
+Scope	Propellerheads	Reason Master Section
+// Define Group	Keyboard Shortcut Variations	Volume	Pan	Send 1	Send 2
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Master"
+
+// --- Knob Bank A (CC21-24): base channel levels ------
+Map	Knob 1 A		Channel 1 Level
+Map	Knob 2 A		Channel 2 Level
+Map	Knob 3 A		Channel 3 Level
+Map	Knob 4 A		Channel 4 Level
+
+// --- Knob Bank B (CC25-28): base channel pans --------
+Map	Knob 1 B		Channel 1 Pan
+Map	Knob 2 B		Channel 2 Pan
+Map	Knob 3 B		Channel 3 Pan
+Map	Knob 4 B		Channel 4 Pan
+
+// Joystick X/Y are pitch bend + mod wheel in device scopes; leave
+// unassigned here so they don't clobber the device-level maps.
+//Map	Joystick Y		Master Level

@@ -1,0 +1,51 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  Europa Shapeshifting Synthesizer
+//
+//  Pads      -> reserved (waveform / patch templates below)
+//  Knobs 1-4A-> filter & master section (CC21-24)
+//  Knobs 1-4B-> amp envelope group      (CC25-28)
+//  Joystick X-> Pitch Bend
+//  Joystick Y-> Mod Wheel
+//  Keyboard  -> Keyboard
+//======================================================================
+
+Scope	Propellerhead Software	se.propellerheads.Europa
+// Define Group	Keyboard Shortcut Variations	Osc1	Osc2	Osc3
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Europa"
+Map	Keyboard		Keyboard
+
+// --- Pads (reserved) ---------------------------------
+// Europa has no drum pads; ready-to-enable templates:
+//Map	Pad 1		Osc1 Wave
+//Map	Pad 2		Osc2 Wave
+//Map	Pad 3		Osc3 Wave
+//Map	Pad 4		Select Previous Patch
+//Map	Pad 5		Select Next Patch
+//Map	Pad 6		Osc1 Filter Freq
+//Map	Pad 7		Osc2 Filter Freq
+//Map	Pad 8		Osc3 Filter Freq
+
+// --- Knob Bank A (CC21-24): filter & master ----------
+Map	Knob 1 A		Filter Drive
+Map	Knob 2 A		Filter Reso
+Map	Knob 3 A		Filter Freq
+Map	Knob 4 A		Master Volume
+
+// --- Knob Bank B (CC25-28): amplitude envelope -------
+Map	Knob 1 B		Amp Attack
+Map	Knob 2 B		Amp Decay
+Map	Knob 3 B		Amp Sustain
+Map	Knob 4 B		Amp Release
+
+// --- Joystick / wheels ------------------------------
+Map	Joystick X		Pitch Bend
+Map	Joystick Y		Mod Wheel

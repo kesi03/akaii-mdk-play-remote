@@ -1,0 +1,59 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  Radical Keys
+//
+//  Pads      -> reserved (patch & effect toggle templates below)
+//  Knobs 1-4A-> tone / blend / response / master   (CC21-24)
+//  Knobs 1-4B-> envelope & compressor               (CC25-28)
+//  Joystick X-> Pitch Bend
+//  Joystick Y-> (no Mod Wheel remotable; see below)
+//  Keyboard  -> Keyboard
+//
+//  NOTE: Scope is se.propellerheads.RadicalKeys (CamelCase) - the
+//  Rack Extension device ID as Reason reports it. Remote item names
+//  (mic1, mic2, Instrument Blend, Vel Resp Curve etc.) follow the
+//  Reason Remote template for this device.
+//======================================================================
+
+Scope	Propellerhead Software	se.propellerheads.RadicalKeys
+// Define Group	Keyboard Shortcut Variations	Tone	Env
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Radical Keys"
+Map	Keyboard		Keyboard
+
+// --- Pads (reserved) ---------------------------------
+// Radical Keys has no drum pads; ready-to-enable templates:
+// Map Pad 1		Select Previous Patch
+// Map Pad 2		Select Next Patch
+// Map Pad 3		Overdrive OnOff
+// Map Pad 4		Comp OnOff
+// Map Pad 5		Tremolo OnOff
+// Map Pad 6		Chorus OnOff
+// Map Pad 7		Phaser OnOff
+// Map Pad 8		Ambience OnOff
+
+// --- Knob Bank A (CC21-24): tone & blend ------------
+Map	Knob 1 A		Character
+Map	Knob 2 A		Instrument Blend
+Map	Knob 3 A		Vel Resp Curve
+Map	Knob 4 A		Master Volume
+
+// --- Knob Bank B (CC25-28): envelope & dynamics -----
+Map	Knob 1 B		Env Attack
+Map	Knob 2 B		Env Decay Curve
+Map	Knob 3 B		Env Release
+Map	Knob 4 B		Comp Amount
+
+// --- Joystick / wheels -------------------------------
+Map	Joystick X		Pitch Bend
+// Radical Keys responds to Pitch Bend and Sustain Pedal but exposes
+// no Mod Wheel remotable. Use a Remote Override to re-point the Y axis
+// to a continuous destination such as Ambience Level if desired:
+//Map	Joystick Y		Ambience Level

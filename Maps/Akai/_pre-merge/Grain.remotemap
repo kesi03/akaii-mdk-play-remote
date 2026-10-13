@@ -1,0 +1,51 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  Grain Sample Manipulator
+//
+//  Pads      -> reserved (modulation templates below)
+//  Knobs 1-4A-> sample / filter group   (CC21-24)
+//  Knobs 1-4B-> amp envelope group      (CC25-28)
+//  Joystick X-> Pitch Bend
+//  Joystick Y-> Mod Wheel
+//  Keyboard  -> Keyboard
+//======================================================================
+
+Scope	Propellerhead Software	se.propellerheads.Grain
+// Define Group	Keyboard Shortcut Variations	Sample	Filter	Amp	Effects
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Grain"
+Map	Keyboard		Keyboard
+
+// --- Pads (reserved) ---------------------------------
+// Grain has no drum pads; ready-to-enable templates:
+//Map	Pad 1		Voices
+//Map	Pad 2		Amp Gain
+//Map	Pad 3		Amp Velocity
+//Map	Pad 4		Filter Env2
+//Map	Pad 5		Filter Vel
+//Map	Pad 6		Filter Kbd
+//Map	Pad 7		Select Previous Patch
+//Map	Pad 8		Select Next Patch
+
+// --- Knob Bank A (CC21-24): sample & filter ----------
+Map	Knob 1 A		Sample Level
+Map	Knob 2 A		Osc Level
+Map	Knob 3 A		Filter Freq
+Map	Knob 4 A		Filter Reso
+
+// --- Knob Bank B (CC25-28): amplitude envelope -------
+Map	Knob 1 B		Amp Attack
+Map	Knob 2 B		Amp Decay
+Map	Knob 3 B		Amp Sustain
+Map	Knob 4 B		Amp Release
+
+// --- Joystick / wheels ------------------------------
+Map	Joystick X		Pitch Bend
+Map	Joystick Y		Mod Wheel

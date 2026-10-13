@@ -1,0 +1,51 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  Combinator 2
+//
+//  Pads 1-4   -> Combinator Buttons 1-4
+//  Knobs 1-4A -> Combinator Rotaries 1-4 (CC21-24)
+//  Knobs 1-4B -> Combinator globals (CC25-28): Enabled /
+//                Run Pattern Devices / Bypass All FX / Select Patch Delta
+//  Joystick X -> Pitch Bend
+//  Joystick Y -> Mod Wheel
+//  Keyboard   -> Keyboard
+//======================================================================
+
+Scope	Propellerheads	Combinator
+// Define Group	Keyboard Shortcut Variations
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Combinator"
+Map	Keyboard		Keyboard
+
+// --- Pads (Bank A) -> Combinator buttons -------------
+Map	Pad 1		Button 1
+Map	Pad 2		Button 2
+Map	Pad 3		Button 3
+Map	Pad 4		Button 4
+
+// Pads 5-16 reserved (Combinator exposes 4 buttons only)
+//Map	Pad 5		Select Previous Patch
+//Map	Pad 6		Select Next Patch
+
+// --- Knob Bank A (CC21-24): rotaries -----------------
+Map	Knob 1 A		Rotary 1
+Map	Knob 2 A		Rotary 2
+Map	Knob 3 A		Rotary 3
+Map	Knob 4 A		Rotary 4
+
+// --- Knob Bank B (CC25-28): global/patch controls ----
+Map	Knob 1 B		Enabled
+Map	Knob 2 B		Run Pattern Devices
+Map	Knob 3 B		Bypass All FX
+Map	Knob 4 B		Select Patch Delta
+
+// --- Joystick / wheels ------------------------------
+Map	Joystick X		Pitch Bend
+Map	Joystick Y		Mod Wheel

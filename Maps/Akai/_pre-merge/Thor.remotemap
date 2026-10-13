@@ -1,0 +1,51 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  Thor Polysonic Synthesizer
+//
+//  Pads      -> reserved (no drum pads on Thor)
+//  Knobs 1-4A-> filter 1/2 group        (CC21-24)
+//  Knobs 1-4B-> amp envelope group      (CC25-28)
+//  Joystick X-> Pitch Bend
+//  Joystick Y-> Mod Wheel
+//  Keyboard  -> Keyboard
+//======================================================================
+
+Scope	Propellerheads	Thor Polysonic Synthesizer
+// Define Group	Keyboard Shortcut Variations	FilterMod	Env	Osc	FX
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Thor"
+Map	Keyboard		Keyboard
+
+// --- Pads (reserved) ---------------------------------
+// Thor has no drum pads; the lines below are ready-to-enable templates.
+//Map	Pad 1		Osc 1 Oct
+//Map	Pad 2		Osc 2 Oct
+//Map	Pad 3		Filter 1 Type
+//Map	Pad 4		Filter 2 Type
+//Map	Pad 5		LFO 1 Rate
+//Map	Pad 6		LFO 1 Waveform
+//Map	Pad 7		Select Previous Patch
+//Map	Pad 8		Select Next Patch
+
+// --- Knob Bank A (CC21-24): filters ------------------
+Map	Knob 1 A		Filter 1 Freq
+Map	Knob 2 A		Filter 1 Res
+Map	Knob 3 A		Filter 2 Freq
+Map	Knob 4 A		Filter 2 Res
+
+// --- Knob Bank B (CC25-28): amplitude envelope -------
+Map	Knob 1 B		Amp Env Attack
+Map	Knob 2 B		Amp Env Decay
+Map	Knob 3 B		Amp Env Sustain
+Map	Knob 4 B		Amp Env Release
+
+// --- Joystick / wheels ------------------------------
+Map	Joystick X		Pitch Bend
+Map	Joystick Y		Mod Wheel

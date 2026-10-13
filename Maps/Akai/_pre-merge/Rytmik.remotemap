@@ -1,0 +1,68 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  Rytmik Drum Machine
+//
+//  Pads 1-8   -> Drum 1-8 Mute       (Bank A)
+//  Pads 9-16  -> Drum 1-8 Solo       (Bank B)
+//  Knobs 1-4A -> Drum 1-4 Volume     (CC21-24)
+//  Knobs 1-4B -> Drum 5-8 Volume     (CC25-28)
+//  Joystick X -> (no pitch bend; retargetable via override)
+//  Joystick Y -> (no mod wheel; retargetable via override)
+//  Keyboard   -> Keyboard
+//
+//  NOTE: Rytmik is a Reason Compact-derived device, so its remote
+//  item names use underscores (Drum_1_Volume, Master_Volume etc.)
+//  and its scope is se.propellerheads.DMFC.
+//======================================================================
+
+Scope	Propellerhead Software	se.propellerheads.DMFC
+// Define Group	Keyboard Shortcut Variations	Level	FX
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Rytmik"
+Map	Keyboard		Keyboard
+
+// --- Pads (Bank A): mute per channel -----------------
+Map	Pad 1		Drum_1_Mute
+Map	Pad 2		Drum_2_Mute
+Map	Pad 3		Drum_3_Mute
+Map	Pad 4		Drum_4_Mute
+Map	Pad 5		Drum_5_Mute
+Map	Pad 6		Drum_6_Mute
+Map	Pad 7		Drum_7_Mute
+Map	Pad 8		Drum_8_Mute
+
+// --- Pads (Bank B): solo per channel -----------------
+Map	Pad 9		Drum_1_Solo
+Map	Pad 10		Drum_2_Solo
+Map	Pad 11		Drum_3_Solo
+Map	Pad 12		Drum_4_Solo
+Map	Pad 13		Drum_5_Solo
+Map	Pad 14		Drum_6_Solo
+Map	Pad 15		Drum_7_Solo
+Map	Pad 16		Drum_8_Solo
+
+// --- Knob Bank A (CC21-24): channel levels 1-4 -------
+Map	Knob 1 A		Drum_1_Volume
+Map	Knob 2 A		Drum_2_Volume
+Map	Knob 3 A		Drum_3_Volume
+Map	Knob 4 A		Drum_4_Volume
+
+// --- Knob Bank B (CC25-28): channel levels 5-8 -------
+Map	Knob 1 B		Drum_5_Volume
+Map	Knob 2 B		Drum_6_Volume
+Map	Knob 3 B		Drum_7_Volume
+Map	Knob 4 B		Drum_8_Volume
+
+// --- Joystick / wheels -------------------------------
+// Rytmik exposes neither pitch bend nor mod wheel. The lines below are
+// deliberately left commented; use Remote Overrides to re-point them to
+// Master_Pitch / Master_Reverb / Master_Filter if desired.
+//Map	Joystick X		Master_Pitch
+//Map	Joystick Y		Master_Reverb

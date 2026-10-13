@@ -1,0 +1,15 @@
+version={0,0,2}
+
+function remote_supported_control_surfaces()
+    local surfaces = {
+        { manufacturer="Akai", model="MPK Mini Play",
+          source="MPKMiniPlay.lua", picture="MPKMiniPlay.png",
+          in_ports={{description="In Port"}},
+          out_ports={{description="Out Port", optional=true}},
+          has_keyboard=true,
+          setup_info_text="Select the MPK Mini Play MIDI In/Out ports. This codec expects the keybed, knobs and joystick on MIDI channel 1 and the pads on MIDI channel 10 (fixed hardware layout).",
+          setup_user_action_text="The MPK Mini Play is not auto-detected; add it manually. Keep the keybed/knobs/joystick on channel 1; pads must stay on channel 10."
+        },
+    }
+    return surfaces
+end

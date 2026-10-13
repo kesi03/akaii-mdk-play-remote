@@ -1,0 +1,54 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  SubTractor Analog Synthesizer
+//
+//  Pads      -> reserved (no drum pads on SubTractor)
+//  Knobs 1-4A-> filter/LFO group        (CC21-24)
+//  Knobs 1-4B-> amp envelope group      (CC25-28)
+//  Joystick X-> Pitch Bend
+//  Joystick Y-> Mod Wheel
+//  Keyboard  -> Keyboard
+//======================================================================
+
+Scope	Propellerheads	SubTractor Analog Synthesizer
+// Define Group	Keyboard Shortcut Variations	FilterMod	Env	Osc
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"SubTractor"
+Map	Keyboard		Keyboard
+
+// --- Pads (reserved) ---------------------------------
+// SubTractor is monophonic-with-unison and has no drum pads. The lines
+// below are ready-to-enable if you retarget them via Remote Overrides.
+//Map	Pad 1		Osc1 Octave
+//Map	Pad 2		Osc2 Octave
+//Map	Pad 3		Osc Mix
+//Map	Pad 4		Filter Env Amount
+//Map	Pad 5		LFO1 Amount
+//Map	Pad 6		LFO1 Rate
+//Map	Pad 7		FM Amount
+//Map	Pad 8		Master Level
+//Map	Pad 9		Select Previous Patch
+//Map	Pad 10		Select Next Patch
+
+// --- Knob Bank A (CC21-24): filter & modulation ------
+Map	Knob 1 A		Filter Freq
+Map	Knob 2 A		Filter Res
+Map	Knob 3 A		Filter Env Amount
+Map	Knob 4 A		LFO1 Rate
+
+// --- Knob Bank B (CC25-28): amplitude envelope --------
+Map	Knob 1 B		Amp Env Attack
+Map	Knob 2 B		Amp Env Decay
+Map	Knob 3 B		Amp Env Sustain
+Map	Knob 4 B		Amp Env Release
+
+// --- Joystick / wheels ------------------------------
+Map	Joystick X		Pitch Bend
+Map	Joystick Y		Mod Wheel

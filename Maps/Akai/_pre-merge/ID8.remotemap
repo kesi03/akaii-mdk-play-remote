@@ -1,0 +1,58 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  ID8 Instrument Device
+//
+//  Pads      -> category / sound / preset navigation
+//  Knobs 1-4A-> volume & instrument parameters   (CC21-24)
+//  Knobs 1-4B-> reserved (parameter templates)   (CC25-28)
+//  Joystick X-> (no pitch bend; retargetable via override)
+//  Joystick Y-> (no mod wheel; retargetable via override)
+//  Keyboard  -> Keyboard
+//
+//  NOTE: ID8 is a preset player; it exposes no pitch bend,
+//  mod wheel, or drum pads. With a multi-instrument patch the
+//  active instrument only responds to its own channel.
+//======================================================================
+
+Scope	Propellerheads	ID8 Instrument Device
+// Define Group	Keyboard Shortcut Variations	Browse	Preset
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"ID8"
+Map	Keyboard		Keyboard
+
+// --- Pads (Bank A): categories & sounds --------------
+Map	Pad 1		Select Previous Category
+Map	Pad 2		Select Next Category
+Map	Pad 3		Select Previous Sound
+Map	Pad 4		Select Next Sound
+
+// --- Pads (Bank B): presets & reserved ----------------
+Map	Pad 5		Select Previous Preset
+Map	Pad 6		Select Next Preset
+// Map Pad 7		Select Previous Category
+// Map Pad 8		Select Next Category
+
+// --- Knob Bank A (CC21-24): ID8 parameters -----------
+Map	Knob 1 A		Volume
+Map	Knob 2 A		Parameter 1
+Map	Knob 3 A		Parameter 2
+// Map Knob 4 A		Volume
+
+// --- Knob Bank B (CC25-28): reserved -----------------
+// ID8 exposes only Volume / Parameter 1 / Parameter 2;
+// ready-to-enable repeat templates:
+// Map Knob 1 B		Volume
+// Map Knob 2 B		Parameter 1
+// Map Knob 3 B		Parameter 2
+
+// --- Joystick / wheels -------------------------------
+// ID8 responds to neither pitch bend nor mod wheel.
+//Map	Joystick X		Pitch Bend
+//Map	Joystick Y		Mod Wheel

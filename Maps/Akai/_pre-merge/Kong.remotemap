@@ -1,0 +1,66 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  Kong Drum Designer
+//
+//  Pads 1-8   -> Kong drums 1-8        (Bank A)
+//  Pads 9-16  -> reserved              (Bank B)
+//  Knobs 1-4A -> Kong master section   (CC21-24)
+//  Knobs 1-4B -> Kong bus/FX section   (CC25-28)
+//  Joystick X -> Pitch Bend
+//  Joystick Y -> Mod Wheel
+//  Keyboard   -> Keyboard
+//======================================================================
+
+Scope	Propellerheads	Kong Drum Designer
+// Define Group	Keyboard Shortcut Variations
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"KONG"
+Map	Keyboard		Keyboard
+
+// --- Pads (Bank A) --------------------------------
+Map	Pad 1		Pad 1
+Map	Pad 2		Pad 2
+Map	Pad 3		Pad 3
+Map	Pad 4		Pad 4
+Map	Pad 5		Pad 5
+Map	Pad 6		Pad 6
+Map	Pad 7		Pad 7
+Map	Pad 8		Pad 8
+
+// Pads 9-16 (Bank B) are reserved. Kong only offers 8 trigger pads.
+// Uncomment once you add a drum-dedicated second Kong or a Redrum duo.
+//Map	Pad 9		Pad 9
+//Map	Pad 10		Pad 10
+//Map	Pad 11		Pad 11
+//Map	Pad 12		Pad 12
+//Map	Pad 13		Pad 13
+//Map	Pad 14		Pad 14
+//Map	Pad 15		Pad 15
+//Map	Pad 16		Pad 16
+
+// --- Knob Bank A (CC21-24): master section ----------
+Map	Knob 1 A		Master Level
+Map	Knob 2 A		Master FX P1
+Map	Knob 3 A		Master FX P2
+Map	Knob 4 A		Master FX On
+
+// --- Knob Bank B (CC25-28): bus/FX section ----------
+Map	Knob 1 B		Bus FX P1
+Map	Knob 2 B		Bus FX P2
+Map	Knob 3 B		Bus FX On
+Map	Knob 4 B		Level Bus FX to Master FX
+
+// --- Joystick / wheels ------------------------------
+Map	Joystick X		Pitch Bend
+Map	Joystick Y		Mod Wheel
+
+// --- Patch navigation (needs a spare button; default off) ---
+//Map	Pad 9		Select Previous Patch
+//Map	Pad 10		Select Next Patch

@@ -1,0 +1,49 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  Malstrom Graintable Synthesizer
+//
+//  Pads      -> reserved (filter/osc envelope templates below)
+//  Knobs 1-4A-> filter A/B section          (CC21-24)
+//  Knobs 1-4B-> modulators & motion         (CC25-28)
+//  Joystick X-> Pitch Bend
+//  Joystick Y-> Mod Wheel
+//  Keyboard  -> Keyboard
+//======================================================================
+
+Scope	Propellerheads	Malstrom Graintable Synthesizer
+// Define Group	Keyboard Shortcut Variations	OscA	OscB
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Malstrom"
+Map	Keyboard		Keyboard
+
+// --- Pads (reserved) ---------------------------------
+// Malstrom has no drum pads; ready-to-enable templates:
+// Map Pad 1		Select Previous Patch
+// Map Pad 2		Select Next Patch
+// Map Pad 3		Filter Env Attack
+// Map Pad 4		Filter Env Decay
+// Map Pad 5		Filter Env Sustain
+// Map Pad 6		Filter Env Release
+
+// --- Knob Bank A (CC21-24): filter section -----------
+Map	Knob 1 A		Filter A Freq
+Map	Knob 2 A		Filter A Resonance
+Map	Knob 3 A		Filter B Freq
+Map	Knob 4 A		Filter B Resonance
+
+// --- Knob Bank B (CC25-28): modulators & motion ------
+Map	Knob 1 B		Modulator A Rate
+Map	Knob 2 B		Modulator B Rate
+Map	Knob 3 B		Oscillator A Motion
+Map	Knob 4 B		Oscillator B Motion
+
+// --- Joystick / wheels ------------------------------
+Map	Joystick X		Pitch Bend
+Map	Joystick Y		Mod Wheel

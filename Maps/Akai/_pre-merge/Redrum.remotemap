@@ -1,0 +1,64 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  Redrum Drum Computer
+//
+//  Pads 1-10  -> Select Drum 1-10      (Bank A + B)
+//  Pads 11-14 -> Pattern 1-4           (Bank B)
+//  Pads 15-16 -> Shuffle / Edit Accent (Bank B)
+//  Knobs 1-4A -> Drum 1-4 Level        (CC21-24)
+//  Knobs 1-4B -> Drum 1-4 Pan          (CC25-28)
+//  Joystick X -> (no pitch bend on Redrum; retargetable via override)
+//  Joystick Y -> (no mod wheel on Redrum; retargetable via override)
+//  Keyboard   -> Keyboard
+//======================================================================
+
+Scope	Propellerheads	Redrum Drum Computer
+// Define Group	Keyboard Shortcut Variations	Level	Pan	Velocity	Length
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Redrum"
+Map	Keyboard		Keyboard
+
+// --- Pads: drum select (Bank A) ----------------------
+Map	Pad 1		Select Drum 1
+Map	Pad 2		Select Drum 2
+Map	Pad 3		Select Drum 3
+Map	Pad 4		Select Drum 4
+Map	Pad 5		Select Drum 5
+Map	Pad 6		Select Drum 6
+Map	Pad 7		Select Drum 7
+Map	Pad 8		Select Drum 8
+
+// --- Pads: drum select + transport (Bank B) ----------
+Map	Pad 9		Select Drum 9
+Map	Pad 10		Select Drum 10
+Map	Pad 11		Pattern 1
+Map	Pad 12		Pattern 2
+Map	Pad 13		Pattern 3
+Map	Pad 14		Pattern 4
+Map	Pad 15		Shuffle
+Map	Pad 16		Edit Accent
+
+// --- Knob Bank A (CC21-24): channel levels -----------
+Map	Knob 1 A		Drum 1 Level
+Map	Knob 2 A		Drum 2 Level
+Map	Knob 3 A		Drum 3 Level
+Map	Knob 4 A		Drum 4 Level
+
+// --- Knob Bank B (CC25-28): channel pans -------------
+Map	Knob 1 B		Drum 1 Pan
+Map	Knob 2 B		Drum 2 Pan
+Map	Knob 3 B		Drum 3 Pan
+Map	Knob 4 B		Drum 4 Pan
+
+// --- Joystick / wheels -------------------------------
+// Redrum exposes neither pitch bend nor mod wheel. The lines below are
+// deliberately left commented; use Remote Overrides to re-point them.
+//Map	Joystick X		Pitch Bend
+//Map	Joystick Y		Mod Wheel

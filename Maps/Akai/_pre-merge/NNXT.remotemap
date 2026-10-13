@@ -1,0 +1,48 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Akai
+Control Surface Model	MPK Mini Play
+Map Version	1.0.0
+
+
+//======================================================================
+//  NN-XT Advanced Sampler
+//
+//  Pads      -> reserved (no drum pads on NN-XT)
+//  Knobs 1-4A-> filter & amp attack/decay (CC21-24)
+//  Knobs 1-4B-> release & output          (CC25-28)
+//  Joystick X-> Pitch Bend
+//  Joystick Y-> Mod Wheel
+//  Keyboard  -> Keyboard
+//======================================================================
+
+Scope	Propellerheads	NN-XT Advanced Sampler
+// Define Group	Keyboard Shortcut Variations
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"NN-XT"
+Map	Keyboard		Keyboard
+
+// --- Pads (reserved) ---------------------------------
+// NN-XT has no drum pads; the lines below are ready-to-enable templates.
+//Map	Pad 1		Select Previous Patch
+//Map	Pad 2		Select Next Patch
+//Map	Pad 3		External Controller
+//Map	Pad 4		Filter Freq
+//Map	Pad 5		Filter Res
+
+// --- Knob Bank A (CC21-24): filter & amp shape ---
+Map	Knob 1 A		Filter Freq
+Map	Knob 2 A		Filter Res
+Map	Knob 3 A		Amp Env Attack
+Map	Knob 4 A		Amp Env Decay
+
+// --- Knob Bank B (CC25-28): release & output ---------
+Map	Knob 1 B		Amp Env Release
+Map	Knob 2 B		Mod Env Decay
+Map	Knob 3 B		External Controller
+Map	Knob 4 B		Master Volume
+
+// --- Joystick / wheels ------------------------------
+Map	Joystick X		Pitch Bend
+Map	Joystick Y		Mod Wheel
