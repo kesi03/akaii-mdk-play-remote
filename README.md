@@ -411,6 +411,15 @@ Useful pages:
 - [Documentation / Reference Manual](https://www.lua.org/docs.html)
 - [Download Lua](https://www.lua.org/download.html)
 
+## TODO
+
+- [ ] Change pad behaviour for instruments.
+- [ ] Ensure **Knob 1 (Bank A)** always controls the device/master volume.
+- [ ] Investigate whether **Players** and **Effects** devices can also be mapped and controlled.
+- [ ] Test each supported device and verify that all knob assignments behave as expected.
+- [ ] Document any devices with non-standard or inconsistent knob behaviour.
+- [ ] Validate Bank A and Bank B mappings across all tested devices.
+  
 ## License / credits
 
 - Reason, Kong, Redrum, SubTractor, Thor, NN-XT, NN-19, Combinator, Dr. Octo Rex,
