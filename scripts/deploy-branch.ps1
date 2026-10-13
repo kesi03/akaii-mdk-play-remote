@@ -32,12 +32,17 @@
 
 .PARAMETER Force
     Run even if Reason appears to be running (not recommended).
+
+.PARAMETER Backup
+    Back up the current variant files (if any) before overwriting them. The
+    copy is written to <repo>\backups\<timestamp>\ (git-ignored).
 #>
 [CmdletBinding()]
 param(
     [string]$Branch,
     [switch]$Clean,
-    [switch]$Force
+    [switch]$Force,
+    [switch]$Backup
 )
 
 $ErrorActionPreference = 'Stop'
@@ -48,11 +53,26 @@ $CodecSrc   = Join-Path $RepoRoot 'Codecs\Lua Codecs\Akai'
 $CodecDest  = Join-Path $RemoteRoot 'Codecs\Lua Codecs\Akai'
 $MapsSrc    = Join-Path $RepoRoot 'Maps\Akai'
 $MapsDest   = Join-Path $RemoteRoot 'Maps\Akai'
+$BackupRoot = Join-Path $RepoRoot 'backups'
 
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 
 function Write-Utf8NoBom([string]$Path, [string]$Text) {
     [System.IO.File]::WriteAllText($Path, $Text, $utf8NoBom)
+}
+
+# --- optional backup of the files that will be overwritten ----------------
+$backupRunDir = Join-Path $BackupRoot (Get-Date -Format 'yyyyMMdd-HHmmss')
+$backedUp = @()
+
+function Backup-One([string]$Path) {
+    if (-not $Backup) { return }
+    if (-not (Test-Path -LiteralPath $Path)) { return }
+    $rel = $Path.Substring($RemoteRoot.Length).TrimStart('\', '/')
+    $target = Join-Path $backupRunDir $rel
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $target) | Out-Null
+    Copy-Item -LiteralPath $Path -Destination $target -Force
+    $script:backedUp += $rel
 }
 
 # --- Reason-running guard -------------------------------------------------
@@ -123,19 +143,34 @@ Write-Host "Branch      : $Branch" -ForegroundColor Cyan
 Write-Host "Variant name: $display" -ForegroundColor Cyan
 Write-Host ""
 
+$variantLua   = Join-Path $CodecDest "$variantBase.lua"
+$variantCodec = Join-Path $CodecDest "$variantBase.luacodec"
+$variantMap   = Join-Path $MapsDest  "$variantBase.remotemap"
+
 if (-not (Test-Path -LiteralPath (Join-Path $CodecDest 'MPKMiniPlay.png'))) {
     Copy-Item -LiteralPath $canonPng -Destination $CodecDest -Force
     Write-Host "  picture -> MPKMiniPlay.png (shared)" -ForegroundColor Green
 }
 
-Copy-Item -LiteralPath $canonLua -Destination (Join-Path $CodecDest "$variantBase.lua") -Force
-Write-Utf8NoBom (Join-Path $CodecDest "$variantBase.luacodec") $codecText
-Write-Utf8NoBom (Join-Path $MapsDest  "$variantBase.remotemap") $mapText
+Backup-One $variantLua
+Backup-One $variantCodec
+Backup-One $variantMap
 
-Write-Host "  codec   -> $CodecDest\$variantBase.lua" -ForegroundColor Green
-Write-Host "  codec   -> $CodecDest\$variantBase.luacodec" -ForegroundColor Green
-Write-Host "  map     -> $MapsDest\$variantBase.remotemap" -ForegroundColor Green
+Copy-Item -LiteralPath $canonLua -Destination $variantLua -Force
+Write-Utf8NoBom $variantCodec $codecText
+Write-Utf8NoBom $variantMap $mapText
+
+Write-Host "  codec   -> $variantLua" -ForegroundColor Green
+Write-Host "  codec   -> $variantCodec" -ForegroundColor Green
+Write-Host "  map     -> $variantMap" -ForegroundColor Green
 Write-Host ""
+if ($Backup) {
+    if ($backedUp.Count -gt 0) {
+        Write-Host "Backed up $($backedUp.Count) file(s) to $backupRunDir" -ForegroundColor Yellow
+    } else {
+        Write-Host "Backup: no existing variant files to back up." -ForegroundColor Yellow
+    }
+}
 Write-Host "Canonical MPKMiniPlay.* left untouched." -ForegroundColor Yellow
 Write-Host "In Reason: Preferences > Control Surfaces > Add > Akai > `"$display`"." -ForegroundColor Yellow
 Write-Host "Keep only ONE MPK Mini Play surface on the MIDI input at a time." -ForegroundColor Yellow
