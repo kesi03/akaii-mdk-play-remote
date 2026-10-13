@@ -40,9 +40,11 @@
 	  pads 1-8, Pad Bank B -> pads 9-16.
 	- Each pad press is ALSO emitted as its matching Pad 1..16 control-surface
 	  item, so a .remotemap may bind pads per device (e.g. the Dr. Octo Rex
-	  scope maps Bank A -> Select Loop 1-8 and Bank B pad 1 -> Run). Devices
-	  that do not map those items ignore them, so the drum-note behaviour is
-	  preserved for Kong and Redrum.
+	  scope maps Bank A -> Select Loop 1-8 and Bank B pad 1 -> Run; the Drum
+	  Sequencer scope maps the single Pattern item (driven by Bank A pads)
+	  -> Pattern Select and Bank B pads 1-3 -> On / Record / Play). Devices
+	  that do not map those items ignore them,
+	  so the drum-note behaviour is preserved for Kong and Redrum.
 	- The knob Bank A/B switch does not change the CC numbers of the four
 	  physical knobs beyond their two fixed assignments (CC48-51 for Bank A,
 	  CC64-67 for Bank B).
@@ -93,8 +95,18 @@ gAnalogCCLookup = {
 -- to silence its pad notes; remove it to restore drum-note behaviour.
 gScopeItemIndex = 2 -- _Scope is item 2 in remote.define_items()
 gScope = ""
+-- Bank A pads on the scopes listed here select a pattern instead of sending
+-- notes: each pad drives the single "Pattern" item (gPatternItemIndex) with
+-- its index (padNumber-1, 0..7). Reason forbids mapping several surface items
+-- to one remotable in a scope, so the Drum Sequencer scope maps that one item
+-- once to Pattern Select (0 = Pattern 1, 7 = Pattern 8).
+gPatternValueScopes = {
+	["Drum Sequencer"] = true,
+}
+gPatternItemIndex = 30 -- the "Pattern" item is last in remote.define_items()
 gSuppressPadNotes = {
 	["Dr. Octo Rex"] = true,
+	["Drum Sequencer"] = true, -- pads select patterns / transport, no notes
 }
 
 -- ID8 (stock instrument) exposes its current sound category as text. The ID8
@@ -158,6 +170,10 @@ function remote_init(manufacturer, model)
 		-- so remote_set_state() can tell Drums from the other categories
 		-- (index 29, see gId8CategoryItemIndex above).
 		{name="ID8 Category", output="text"},
+
+		-- Single value item the Drum Sequencer scope maps to "Pattern Select".
+		-- The codec drives it from the Bank A pads (index 30).
+		{name="Pattern", input="value", output="value", min=0, max=7},
 	}
 	remote.define_items(items)
 
@@ -241,15 +257,26 @@ function remote_process_midi(event)
 		if PadNum ~= nil then
 			-- ret.x = 1 for note-on (status 0x9?), 0 for note-off (0x8?).
 			local OnOff = (ret.x ~= 0 and ret.z > 0) and 1 or 0
-			-- Also drive the matching Pad 1..16 item (index 3 + PadNum - 1),
-			-- so a .remotemap can bind individual pads per device (e.g. the
-			-- Dr. Octo Rex scope maps Bank A to Select Loop 1-8 and Bank B
-			-- pad 1 to Run). Devices that do not map these items ignore them.
+			-- Drive the matching Pad 1..16 item (index 3 + PadNum - 1), so a
+			-- .remotemap can bind individual pads per device (e.g. the Dr. Octo
+			-- Rex scope maps Bank A to Select Loop 1-8 and Bank B pad 1 to
+			-- Run). Devices that do not map these items ignore them.
 			remote.handle_input({
 				time_stamp = event.time_stamp,
 				item = 2 + PadNum,      -- Pad 1 is index 3
 				value = OnOff,
 			})
+			-- On a pattern-value scope, Bank A pads select a specific pattern.
+			-- Since one remotable may only be mapped to a single surface item,
+			-- every Bank A pad funnels its index (padNumber-1, 0..7) into the
+			-- one "Pattern" item, which the scope maps to Pattern Select.
+			if PadNum <= 8 and gPatternValueScopes[gScope] then
+				remote.handle_input({
+					time_stamp = event.time_stamp,
+					item = gPatternItemIndex,
+					value = PadNum - 1,
+				})
+			end
 			-- Re-emit as a Keyboard drum note so Kong/Redrum play - unless the
 			-- focused scope is in gSuppressPadNotes, in which case the pad
 			-- only drives its Pad item (e.g. Dr. Octo Rex Select Loop / Run).

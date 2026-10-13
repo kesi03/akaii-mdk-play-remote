@@ -2,7 +2,7 @@ Propellerhead Remote Mapping File
 File Format Version	1.0.0
 Control Surface Manufacturer	Akai
 Control Surface Model	MPK Mini Play
-Map Version	1.2.1
+Map Version	1.3.0
 
 
 //======================================================================
@@ -18,7 +18,7 @@ Map Version	1.2.1
 //             focused drum device (Kong, Redrum) plays them and other
 //             devices ignore them. The codec also emits every pad as a
 //             mappable Pad item, which an individual scope may bind (see the
-//             Dr. Octo Rex scope below).
+//             Dr. Octo Rex and Drum Sequencer scopes below).
 //======================================================================
 
 Scope	Propellerheads	Master Keyboard
@@ -75,6 +75,22 @@ Map	Knob 1 B		LFO1 Amount
 Map	Knob 2 B		Filter Mode
 Map	Knob 3 B		LFO1 Wave
 Map	Knob 4 B		LFO1 Dest
+
+Scope	Propellerhead Software	se.propellerheads.DrumSeq
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	_Scope		"Drum Sequencer"
+
+
+// --- Pattern select (Bank A pads 1-8) -------------------
+// Reason allows only one surface item per remotable, so the codec funnels
+// every Bank A pad into the single "Pattern" item (padNumber-1, 0..7).
+Map	Pattern		Pattern Select
+
+// --- Pads (Bank B, Pad 9-11): transport -----------------
+Map	Pad 9		On
+Map	Pad 10		Record
+Map	Pad 11		Play
 
 Scope	Propellerhead Software	se.propellerheads.Europa
 //	Control Surface Item	Key	Remotable Item	Scale	Mode
