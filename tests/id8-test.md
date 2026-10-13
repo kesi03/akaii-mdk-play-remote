@@ -9,7 +9,8 @@ Device under test: **Akai MPK Mini Play** → **ID8** (`Maps/Akai/MPKMiniPlay.re
    1 Volume   2 Parameter 1   1 (unmapped)   2 (unmapped)
    3 Parameter 2   4 (unmapped)   3 (unmapped)   4 (unmapped)
 
-   Pads     : drum notes 36-51 (Bank A 36-43, Bank B 44-51)
+   Pads     : drum notes 36-51 (Bank A 36-43, Bank B 44-51); in the Drums
+              category Bank A plays the GM core kit
    Joystick : unmapped
    Keyboard : notes 48-72 (velocity)
 ```
@@ -35,8 +36,12 @@ Device under test: **Akai MPK Mini Play** → **ID8** (`Maps/Akai/MPKMiniPlay.re
 
 | # | Action | Expected result | Pass |
 |---|--------|-----------------|------|
-| 1 | Tap Bank A pads 1-8 (hardware notes 16-23) | Sent as drum notes 36-43; ignored by the device (non-drum) | ☐ |
+| 1 | Tap Bank A pads 1-8 (hardware notes 16-23) with a **non-Drums** category selected | Sent as drum notes 36-43; ignored by the device (non-drum) | ☐ |
 | 2 | Tap Bank B pads 9-16 (hardware notes 32-39) | Sent as drum notes 44-51; ignored by the device (non-drum) | ☐ |
+| 3 | Set ID8 category to **Drums** (rack Category selector, or Select Next/Previous Category) | Category Name reports "Drums" (Knob/pad scope stays on ID8) | ☐ |
+| 4 | Tap Bank A pads 1-8 | GM core kit: 36 kick, 38 snare, 42 closed hat, 46 open hat, 49 crash, 51 ride, 50 high tom, 45 low tom | ☐ |
+| 5 | Set category back to a melodic one (e.g. Piano) and tap Bank A pads | Default chromatic notes 36-43 again (no drum special-casing) | ☐ |
+| 6 | Tap Bank B pads while category is Drums | Unchanged: notes 44-51 | ☐ |
 
 ## 3. Knob A/B switching
 
@@ -70,5 +75,6 @@ Device under test: **Akai MPK Mini Play** → **ID8** (`Maps/Akai/MPKMiniPlay.re
 ## 7. Regression checklist
 
 - [ ] Pad drum notes (36-51) are ignored by this non-drum device and never leak into the keybed
+- [ ] Drums category: Bank A plays the GM core kit; other categories revert to 36-43
 - [ ] Category/sound jumps do not disturb sequencer clock
 - [ ] Knob B bank stays silent until overridden

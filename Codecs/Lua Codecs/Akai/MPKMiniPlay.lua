@@ -97,6 +97,24 @@ gSuppressPadNotes = {
 	["Dr. Octo Rex"] = true,
 }
 
+-- ID8 (stock instrument) exposes its current sound category as text. The ID8
+-- scope maps ID8's "Category Name" remote item onto the "ID8 Category" surface
+-- item below. When an ID8 is focused and its category is Drums we retarget the
+-- Bank A pads to a General MIDI core drum kit (ID8's drum patches are General
+-- MIDI mapped); any other category keeps the normal chromatic pad notes.
+gId8CategoryItemIndex = 29 -- "ID8 Category" is the last item in define_items()
+gId8Category = ""
+gId8DrumNotes = {
+	36, -- Pad 1  Bass Drum 1 (kick)
+	38, -- Pad 2  Acoustic Snare
+	42, -- Pad 3  Closed Hi-Hat
+	46, -- Pad 4  Open Hi-Hat
+	49, -- Pad 5  Crash Cymbal 1
+	51, -- Pad 6  Ride Cymbal 1
+	50, -- Pad 7  High Tom
+	45, -- Pad 8  Low Tom
+}
+
 --------------------------------------------------------------------------
 -- remote_init
 --------------------------------------------------------------------------
@@ -135,6 +153,11 @@ function remote_init(manufacturer, model)
 
 		{name="Joystick X", input="value", min=0, max=16383},
 		{name="Joystick Y", input="value", min=0, max=127},
+
+		-- Text item the ID8 scope maps to ID8's "Category Name" remote item,
+		-- so remote_set_state() can tell Drums from the other categories
+		-- (index 29, see gId8CategoryItemIndex above).
+		{name="ID8 Category", output="text"},
 	}
 	remote.define_items(items)
 
@@ -164,14 +187,20 @@ end
 --------------------------------------------------------------------------
 -- remote_set_state  (track the focused device name via the _Scope item)
 --------------------------------------------------------------------------
--- Reason calls this whenever an item value changes. We only care about the
--- _Scope text, which tells us which device is focused so pad notes can be
--- suppressed for the scopes in gSuppressPadNotes.
+-- Reason calls this whenever an item value changes. We capture two text items:
+-- the _Scope text (which device is focused) and, when an ID8 is focused, its
+-- "Category Name" (so pad notes can be special-cased for the Drums category).
 function remote_set_state(changed_items)
 	if remote.is_item_enabled(gScopeItemIndex) then
 		gScope = remote.get_item_text_value(gScopeItemIndex)
 	else
 		gScope = ""
+	end
+
+	if remote.is_item_enabled(gId8CategoryItemIndex) then
+		gId8Category = remote.get_item_text_value(gId8CategoryItemIndex)
+	else
+		gId8Category = ""
 	end
 end
 
@@ -225,11 +254,20 @@ function remote_process_midi(event)
 			-- focused scope is in gSuppressPadNotes, in which case the pad
 			-- only drives its Pad item (e.g. Dr. Octo Rex Select Loop / Run).
 			if not gSuppressPadNotes[gScope] then
+				-- Default target is the chromatic Kong/Redrum note 36..51.
+				-- On an ID8 whose category is Drums, Bank A pads are converted
+				-- instead to the General MIDI core kit (gId8DrumNotes): the
+				-- raw pad note (16-23) becomes the matching GM drum note.
+				local outNote = 35 + PadNum
+				if PadNum <= 8 and gScope == "ID8"
+					and string.find(string.lower(gId8Category), "drum", 1, true) ~= nil then
+					outNote = gId8DrumNotes[PadNum]
+				end
 				remote.handle_input({
 					time_stamp = event.time_stamp,
 					item = 1,               -- Keyboard item
 					value = OnOff,
-					note = 35 + PadNum,     -- Kong/Redrum drum note 36..51
+					note = outNote,
 					velocity = ret.z,
 				})
 			end

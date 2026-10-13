@@ -2,7 +2,7 @@ Propellerhead Remote Mapping File
 File Format Version	1.0.0
 Control Surface Manufacturer	Akai
 Control Surface Model	MPK Mini Play
-Map Version	1.2.0
+Map Version	1.2.1
 
 
 //======================================================================
@@ -136,6 +136,11 @@ Scope	Propellerheads	ID8 Instrument Device
 //	Control Surface Item	Key	Remotable Item	Scale	Mode
 
 Map	_Scope		"ID8"
+
+// ID8's current category, as text ("Drums", "Bass", ...). The codec reads
+// this so that when the category is Drums the Bank A pads play a General MIDI
+// core drum kit; any other category keeps the normal pad notes.
+Map	ID8 Category		Category Name
 
 
 // --- Knob Bank A (CC48-51): ID8 parameters -----------
