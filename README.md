@@ -7,9 +7,12 @@ Remote scripts for **Reason** (Propellerheads) and the **Akai MPK Mini Play**.
 ---
 ## Background
 
-I bought a second hand Akai MPK Mini play and wanted to use it in Reason 10. The only choice was to use the pre-built Akai MPK mini preferences but the pads did not work.
-I decided that together with AI i would get a solution that would work for me.
+I bought a second-hand Akai MPK Mini Play and wanted to use it with Reason 10. The only available option was the built-in Akai MPK Mini controller configuration, but the pads did not work correctly.
+
+I decided to work with AI to create a solution that would meet my specific requirements and provide full functionality for the controller.
+
 ---
+
 ## Purpose
 
 Gives the MPK Mini Play a proper, two‑way Reason Remote integration: a Lua
