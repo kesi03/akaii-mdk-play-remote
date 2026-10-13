@@ -6,10 +6,11 @@ Device under test: **Akai MPK Mini Play** → **Dr. Octo Rex Loop Player** (`Map
 
 ```
    Knob A (CC48-51)          Knob B (CC64-67)
-   1 Filter Freq   2 Filter Res   1 LFO1 Amount   2 Filter Mode
-   3 Filter Env    4 LFO1 Rate    3 LFO1 Wave     4 LFO1 Dest
+   1 Master Level    2 Transpose       1 LFO1 Amount   2 Filter Mode
+   3 Loop Transpose  4 Loop Level      3 LFO1 Wave     4 LFO1 Dest
 
-   Pads     : drum notes 36-51 (Bank A 36-43, Bank B 44-51)
+   Pads     : Bank A pads 1-8 = Select Loop 1-8; Bank B pad 1 = Run
+              (pads also re-emitted as drum notes 36-51)
    Joystick : X = Pitch Bend   Y = Mod Wheel
    Keyboard : notes 48-72 (velocity)
 ```
@@ -35,17 +36,18 @@ Device under test: **Akai MPK Mini Play** → **Dr. Octo Rex Loop Player** (`Map
 
 | # | Action | Expected result | Pass |
 |---|--------|-----------------|------|
-| 1 | Tap Bank A pads 1-8 (hardware notes 16-23) | Sent as drum notes 36-43; ignored by the device (non-drum) | ☐ |
-| 2 | Tap Bank B pads 9-16 (hardware notes 32-39) | Sent as drum notes 44-51; ignored by the device (non-drum) | ☐ |
+| 1 | Tap Bank A pads 1-8 (hardware notes 16-23) | Loops 1-8 are selected (Select Loop 1-8) | ☐ |
+| 2 | Tap Bank B pad 1 (hardware note 32) | Loop playback toggles Run | ☐ |
+| 3 | Tap Bank B pads 2-8 (hardware notes 33-39) | No mapped action (these pads are unassigned here) | ☐ |
 
 ## 3. Knob A/B switching
 
 | # | Action | Expected result | Pass |
 |---|--------|-----------------|------|
-| 3 | Turn **Knob 1 A** (CC48) | **Filter Freq** moves | ☐ |
-| 4 | Turn **Knob 2 A** (CC49) | **Filter Res** moves | ☐ |
-| 5 | Turn **Knob 3 A** (CC50) | **Filter Env Amount** moves | ☐ |
-| 6 | Turn **Knob 4 A** (CC51) | **LFO1 Rate** moves | ☐ |
+| 3 | Turn **Knob 1 A** (CC48) | **Master Level** (output volume) moves | ☐ |
+| 4 | Turn **Knob 2 A** (CC49) | **Transpose** (global) moves | ☐ |
+| 5 | Turn **Knob 3 A** (CC50) | **Loop Transpose** moves | ☐ |
+| 6 | Turn **Knob 4 A** (CC51) | **Loop Level** moves | ☐ |
 | 7 | Turn **Knob 1 B** (CC64) / **2 B** (CC65) / **3 B** (CC66) / **4 B** (CC67) | **LFO1 Amount**, **Filter Mode**, **LFO1 Wave**, **LFO1 Dest** move | ☐ |
 | 8 | Switch hardware knob bank A<->B and re-check | Same CC numbers, mapped targets switch | ☐ |
 
@@ -74,6 +76,7 @@ Device under test: **Akai MPK Mini Play** → **Dr. Octo Rex Loop Player** (`Map
 
 ## 7. Regression checklist
 
-- [ ] Pad drum notes (36-51) are ignored by this non-drum device and never leak into the keybed
+- [ ] Bank A pads select loops 1-8; Bank B pad 1 toggles Run
+- [ ] Pad drum notes (36-51) do not leak into the keybed
 - [ ] Pitch bend does not affect knobs or transport
 - [ ] Knob movement does not retrigger slices

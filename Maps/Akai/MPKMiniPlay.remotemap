@@ -2,7 +2,7 @@ Propellerhead Remote Mapping File
 File Format Version	1.0.0
 Control Surface Manufacturer	Akai
 Control Surface Model	MPK Mini Play
-Map Version	1.1.0
+Map Version	1.2.0
 
 
 //======================================================================
@@ -13,10 +13,12 @@ Map Version	1.1.0
 //  Keyboard : 25 keys, mapped once in the Master Keyboard scope.
 //  Joystick : X = Pitch Bend, Y = Mod Wheel (mapped once, globally).
 //  Knobs    : Bank A (CC48-51) + Bank B (CC64-67), mapped per device below.
-//  Pads     : NOT mapped here. The 16 pads are drum-note triggers - the
-//             codec re-emits Bank A as notes 36-43 and Bank B as notes
-//             44-51 through the Keyboard item, so the focused drum device
-//             (Kong, Redrum) plays them and other devices ignore them.
+//  Pads     : drum-note triggers. The codec re-emits Bank A as notes 36-43
+//             and Bank B as notes 44-51 through the Keyboard item, so the
+//             focused drum device (Kong, Redrum) plays them and other
+//             devices ignore them. The codec also emits every pad as a
+//             mappable Pad item, which an individual scope may bind (see the
+//             Dr. Octo Rex scope below).
 //======================================================================
 
 Scope	Propellerheads	Master Keyboard
@@ -49,11 +51,24 @@ Scope	Propellerheads	Dr.REX Loop Player
 Map	_Scope		"Dr. Octo Rex"
 
 
-// --- Knob Bank A (CC48-51): filter & filter envelope ----
-Map	Knob 1 A		Filter Freq
-Map	Knob 2 A		Filter Res
-Map	Knob 3 A		Filter Env Amount
-Map	Knob 4 A		LFO1 Rate
+// --- Pads (Bank A, Pad 1-8): select loops 1-8 ---------
+Map	Pad 1		Select Loop 1
+Map	Pad 2		Select Loop 2
+Map	Pad 3		Select Loop 3
+Map	Pad 4		Select Loop 4
+Map	Pad 5		Select Loop 5
+Map	Pad 6		Select Loop 6
+Map	Pad 7		Select Loop 7
+Map	Pad 8		Select Loop 8
+
+// --- Pad (Bank B, Pad 9): Run -------------------------
+Map	Pad 9		Run
+
+// --- Knob Bank A (CC48-51): level & transpose ---------
+Map	Knob 1 A		Master Level
+Map	Knob 2 A		Transpose
+Map	Knob 3 A		Loop Transpose
+Map	Knob 4 A		Loop Level
 
 // --- Knob Bank B (CC64-67): LFO shaping ---------------
 Map	Knob 1 B		LFO1 Amount

@@ -39,7 +39,10 @@ flowchart LR
 ```
 
 The codec turns raw MIDI into named control events; the `.remotemap` binds
-those control names to each device's **Scope** and remotable items.
+those control names to each device's **Scope** and remotable items. The codec
+also keeps a small device-aware layer: it reads the focused scope from the
+`_Scope` item so pads can behave differently per device (see
+[Dr. Octo Rex](docs/dr-octo-rex.md#how-the-pads-work-on-dr-octo-rex)).
 
 ## Hardware profile
 
@@ -51,7 +54,7 @@ The MPK Mini Play exposes the following controls (see
 | Control        | Physical               | MIDI                        |
 |----------------|------------------------|-----------------------------|
 | Keyboard       | 25 velocity keys       | Notes 48\u201372                |
-| Pads ×16       | 8 pads, 2 banks        | Bank A: notes 16–23 · Bank B: notes 32–39 → drum notes 36–51 |
+| Pads ×16       | 8 pads, 2 banks        | Bank A: notes 16–23 · Bank B: notes 32–39 → drum notes 36–51 (Dr. Octo Rex: loops 1–8 / Run) |
 | Knobs ×8       | 4 knobs, 2 banks       | Bank A: CC48-51 · Bank B: CC64-67 |
 | Joystick X     | Joystick horizontal    | Pitch Bend                  |
 | Joystick Y     | Joystick vertical      | CC16 (mod wheel)             |
@@ -62,10 +65,12 @@ Notes:
 - MPK Mini Play has **no transport buttons** and **no aftertouch**.
 - Keybed, knobs and joystick transmit on MIDI **channel 1**; the pads
   transmit on MIDI **channel 1** (Akai drum convention).
-- The pads are **drum-note triggers**: the codec transposes Bank A to notes
-  36–43 and Bank B to notes 44–51 (through the Keyboard item), so the focused
-  drum device (Kong, Redrum) plays them and every other device ignores them.
-  There is no pad-LED/note echo to the hardware.
+- The pads are **drum-note triggers** by default: the codec transposes Bank A
+  to notes 36–43 and Bank B to notes 44–51 (through the Keyboard item), so the
+  focused drum device (Kong, Redrum) plays them and every other device ignores
+  them. Each press is also emitted as a mappable Pad item; **Dr. Octo Rex**
+  uses those to select loops 1-8 / toggle Run, and the codec suppresses its
+  drum notes. There is no pad-LED/note echo to the hardware.
 
 ```
         +-----------------------------------------------------------+
@@ -133,32 +138,34 @@ Notes:
 All device scopes live in the single `Maps/Akai/MPKMiniPlay.remotemap`. Each
 row below lists the Reason **Scope** that file maps for that device.
 
-| Device              | Scope                                             | Pads → drums | Knobs A/B | Joystick | Keyboard |
-|---------------------|---------------------------------------------------|--------------|-----------|----------|----------|
-| Kong Drum Designer  | Propellerheads / Kong Drum Designer | 36–51 | Master + Bus/FX | pitch/mod | ✓ |
-| Redrum              | Propellerheads / Redrum Drum Computer | 36–51 | Levels/Pans | n/a (override) | ✓ |
-| Dr. Octo Rex        | Propellerheads / Dr.REX Loop Player | 36–51 | Filter+LFO groups | pitch/mod | ✓ |
-| SubTractor          | Propellerheads / SubTractor Analog Synthesizer | 36–51 | Filter/Env | pitch/mod | ✓ |
-| Thor                | Propellerheads / THOR Polysonic Synthesizer | 36–51 | Filters/Env | pitch/mod | ✓ |
-| NN-XT               | Propellerheads / NN-XT Advanced Sampler | 36–51 | Filter/Amp | pitch/mod | ✓ |
-| NN-19               | Propellerheads / NN19 Digital Sampler | 36–51 | Filter+LFO / Amp env | pitch/mod | ✓ |
-| Europa              | Propellerhead Software / se.propellerheads.Europa | 36–51 | Filter/Env | pitch/mod | ✓ |
-| Grain               | Propellerhead Software / se.propellerheads.Grain | 36–51 | Sample/FX + Env | pitch/mod | ✓ |
-| Rytmik              | Propellerhead Software / se.propellerheads.DMFC | 36–51 | Drum levels | n/a (override) | ✓ |
-| Malstrom            | Propellerheads / Malstrom Graintable Synthesizer | 36–51 | Filters/Mods | pitch/mod | ✓ |
-| Monotone            | Propellerhead Software / se.propellerheads.Monotone | 36–51 | Voice/Amp env | pitch/mod | ✓ |
-| Radical Piano       | Propellerhead Software / se.propellerheads.radicalpiano | 36–51 | Character/Mics + Env | pitch only | ✓ |
-| Radical Keys        | Propellerhead Software / se.propellerheads.radicalkeys | 36–51 | Tone/Blend + Env | pitch only | ✓ |
-| ID8                 | Propellerheads / ID8 Instrument Device | 36–51 | Volume + P1/P2 | n/a (override) | ✓ |
-| Klang               | Propellerhead Software / se.propellerheads.Klang | 36–51 | Filter/FX | n/a (override) | ✓ |
-| Pangea              | Propellerhead Software / se.propellerheads.Pangea | 36–51 | Filter/FX | n/a (override) | ✓ |
-| Humana              | Propellerhead Software / se.propellerheads.Humana | 36–51 | Filter/FX | n/a (override) | ✓ |
-| Combinator 2        | Propellerheads / Combinator | 36–51 | Rotaries/Globals | pitch/mod | ✓ |
-| Mixer 14:2 + Master | Propellerheads / Mixer 14:2 + Reason Master Section | 36–51 | Levels/Pans | Master level | ✓ |
+| Device              | Scope                                             | Pads → | Knobs A/B | Joystick | Keyboard |
+|---------------------|---------------------------------------------------|--------|-----------|----------|----------|
+| Kong Drum Designer  | Propellerheads / Kong Drum Designer | drums 36–51 | Master + Bus/FX | pitch/mod | ✓ |
+| Redrum              | Propellerheads / Redrum Drum Computer | drums 36–51 | Levels/Pans | n/a (override) | ✓ |
+| Dr. Octo Rex        | Propellerheads / Dr.REX Loop Player | loops 1–8 / Run | Level/Transpose + LFO | pitch/mod | ✓ |
+| SubTractor          | Propellerheads / SubTractor Analog Synthesizer | drums 36–51 | Filter/Env | pitch/mod | ✓ |
+| Thor                | Propellerheads / THOR Polysonic Synthesizer | drums 36–51 | Filters/Env | pitch/mod | ✓ |
+| NN-XT               | Propellerheads / NN-XT Advanced Sampler | drums 36–51 | Filter/Amp | pitch/mod | ✓ |
+| NN-19               | Propellerheads / NN19 Digital Sampler | drums 36–51 | Filter+LFO / Amp env | pitch/mod | ✓ |
+| Europa              | Propellerhead Software / se.propellerheads.Europa | drums 36–51 | Filter/Env | pitch/mod | ✓ |
+| Grain               | Propellerhead Software / se.propellerheads.Grain | drums 36–51 | Sample/FX + Env | pitch/mod | ✓ |
+| Rytmik              | Propellerhead Software / se.propellerheads.DMFC | drums 36–51 | Drum levels | n/a (override) | ✓ |
+| Malstrom            | Propellerheads / Malstrom Graintable Synthesizer | drums 36–51 | Filters/Mods | pitch/mod | ✓ |
+| Monotone            | Propellerhead Software / se.propellerheads.Monotone | drums 36–51 | Voice/Amp env | pitch/mod | ✓ |
+| Radical Piano       | Propellerhead Software / se.propellerheads.radicalpiano | drums 36–51 | Character/Mics + Env | pitch only | ✓ |
+| Radical Keys        | Propellerhead Software / se.propellerheads.radicalkeys | drums 36–51 | Tone/Blend + Env | pitch only | ✓ |
+| ID8                 | Propellerheads / ID8 Instrument Device | drums 36–51 | Volume + P1/P2 | n/a (override) | ✓ |
+| Klang               | Propellerhead Software / se.propellerheads.Klang | drums 36–51 | Filter/FX | n/a (override) | ✓ |
+| Pangea              | Propellerhead Software / se.propellerheads.Pangea | drums 36–51 | Filter/FX | n/a (override) | ✓ |
+| Humana              | Propellerhead Software / se.propellerheads.Humana | drums 36–51 | Filter/FX | n/a (override) | ✓ |
+| Combinator 2        | Propellerheads / Combinator | drums 36–51 | Rotaries/Globals | pitch/mod | ✓ |
+| Mixer 14:2 + Master | Propellerheads / Mixer 14:2 + Reason Master Section | drums 36–51 | Levels/Pans | Master level | ✓ |
 
-The **Pads → drums** column is device-agnostic: every device receives the same
-drum notes 36–51, so Kong and Redrum play the pads directly while other devices
-ignore them.
+The **Pads →** column is device-agnostic by default: every device receives the
+same drum notes 36–51, so Kong and Redrum play the pads directly while other
+devices ignore them. **Dr. Octo Rex** is the one exception — its pads select
+loops 1–8 / toggle Run instead of sending notes (see [Dr. Octo Rex
+pads](docs/dr-octo-rex.md#how-the-pads-work-on-dr-octo-rex)).
 
 Notes:
 
@@ -178,9 +185,12 @@ Notes:
   commented and are re-pointed via Remote Overrides.
 - **ID8** exposes only `Volume`, `Parameter 1` and `Parameter 2` as knobs; the
   remaining knob slots ship commented for Remote Overrides.
-- **Pads** are device-agnostic: they always send Reason drum notes 36–51
+- **Pads** are device-agnostic by default: they send Reason drum notes 36–51
   through the Keyboard item, so Kong/Redrum play them and other devices ignore
-  them.
+  them. **Dr. Octo Rex** is the exception: its pads are mapped per device
+  (Bank A pads 1-8 → loops 1-8, Bank B pad 1 → Run) and the codec suppresses
+  their drum notes via `gSuppressPadNotes` so they do not also play. See the
+  [Dr. Octo Rex page](docs/dr-octo-rex.md#how-the-pads-work-on-dr-octo-rex).
 - **Radical Keys** uses the CamelCase device ID
   `se.propellerheads.RadicalKeys` (note: *Radical Piano* is lowercase,
   `se.propellerheads.radicalpiano`). Its remote item names follow the Reason
@@ -201,10 +211,13 @@ the control‑map picture, the MIDI binding of every control, the Reason
 
 ## Mapping philosophy
 
-- **Pads** → device-agnostic drum notes: Bank A sends notes 36–43 and Bank B
-  sends 44–51 (delivered through the Keyboard item), so the focused drum
-  device (Kong, Redrum) plays them directly; other devices ignore them. No
-  per-device pad mapping is required.
+- **Pads** → device-agnostic drum notes by default: Bank A sends notes 36–43
+  and Bank B sends 44–51 (delivered through the Keyboard item), so the focused
+  drum device (Kong, Redrum) plays them directly; other devices ignore them.
+  The codec can also emit a mappable Pad item per press, and a device can opt
+  into per-device pad mapping with note suppression (Dr. Octo Rex: Bank A →
+  loops 1-8, Bank B pad 1 → Run). See
+  [Dr. Octo Rex pads](docs/dr-octo-rex.md#how-the-pads-work-on-dr-octo-rex).
 - **Knob bank A** (CC48-51) → the "four most‑edited" parameters of the device.
 - **Knob bank B** (CC64-67) → the second layer: envelopes, sends, pans.
 - **Joystick X** → pitch bend (global). **Joystick Y** → mod wheel (CC16).

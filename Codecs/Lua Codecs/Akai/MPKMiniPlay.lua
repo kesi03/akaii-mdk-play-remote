@@ -38,6 +38,11 @@
 	  consumed so it never reaches the Keyboard auto-inputs; only keybed notes
 	  (48-72) reach those auto-inputs untouched. Pad Bank A -> Kong/Redrum
 	  pads 1-8, Pad Bank B -> pads 9-16.
+	- Each pad press is ALSO emitted as its matching Pad 1..16 control-surface
+	  item, so a .remotemap may bind pads per device (e.g. the Dr. Octo Rex
+	  scope maps Bank A -> Select Loop 1-8 and Bank B pad 1 -> Run). Devices
+	  that do not map those items ignore them, so the drum-note behaviour is
+	  preserved for Kong and Redrum.
 	- The knob Bank A/B switch does not change the CC numbers of the four
 	  physical knobs beyond their two fixed assignments (CC48-51 for Bank A,
 	  CC64-67 for Bank B).
@@ -59,10 +64,9 @@
 gFirstAnalogIndex = 19
 gNumberOfAnalogs = 8
 
--- Item indices: 1 = Keyboard, 2 = _Scope, 3..18 = Pad 1..16. The Pad items
--- are declared only to keep the table indices stable (so the first knob is
--- index 19); they are not driven from MIDI and are not referenced by any
--- .remotemap - the pads are handled as drum notes in remote_process_midi().
+-- Item indices: 1 = Keyboard, 2 = _Scope, 3..18 = Pad 1..16. Pads are driven
+-- from MIDI in remote_process_midi() (both as their Pad item and as a
+-- re-emitted drum note), so a .remotemap can bind individual pads per device.
 -- Pad MIDI note (ch1) -> pad number (1-16).
 gPadNoteLookup = {
 	[0x10]=1,  [0x11]=2,  [0x12]=3,  [0x13]=4,  [0x14]=5,  [0x15]=6,  [0x16]=7,  [0x17]=8,   -- Bank A
@@ -73,6 +77,24 @@ gPadNoteLookup = {
 gAnalogCCLookup = {
 	[0x30]=1, [0x31]=2, [0x32]=3, [0x33]=4, -- Bank A: Knob 1-4, CC48-51
 	[0x40]=5, [0x41]=6, [0x42]=7, [0x43]=8, -- Bank B: Knob 1-4, CC64-67
+}
+
+--------------------------------------------------------------------------
+-- Device-aware pad behaviour
+--------------------------------------------------------------------------
+-- By default a pad press is emitted twice: as its mappable Pad item AND as a
+-- re-emitted Keyboard drum note (so Kong/Redrum, which only trigger from
+-- notes, still play). For the scopes listed below the drum note is NOT sent -
+-- the pad drives its mapped Pad item only, so pads select/run things without
+-- also playing notes on that device.
+--
+-- The scope name is the string Reason reports on the _Scope item, i.e. the
+-- right-hand value of that scope's `Map _Scope "..."` line. Add a scope here
+-- to silence its pad notes; remove it to restore drum-note behaviour.
+gScopeItemIndex = 2 -- _Scope is item 2 in remote.define_items()
+gScope = ""
+gSuppressPadNotes = {
+	["Dr. Octo Rex"] = true,
 }
 
 --------------------------------------------------------------------------
@@ -134,8 +156,23 @@ function remote_init(manufacturer, model)
 	}
 	remote.define_auto_inputs(inputs)
 
-	-- The pads are pure note triggers (handled in remote_process_midi below),
-	-- so there is no control-surface item state to echo back to the hardware.
+	-- Pads are handled in remote_process_midi() below (emitted as Pad items
+	-- and as drum notes); there is no control-surface item state to echo back
+	-- to the hardware.
+end
+
+--------------------------------------------------------------------------
+-- remote_set_state  (track the focused device name via the _Scope item)
+--------------------------------------------------------------------------
+-- Reason calls this whenever an item value changes. We only care about the
+-- _Scope text, which tells us which device is focused so pad notes can be
+-- suppressed for the scopes in gSuppressPadNotes.
+function remote_set_state(changed_items)
+	if remote.is_item_enabled(gScopeItemIndex) then
+		gScope = remote.get_item_text_value(gScopeItemIndex)
+	else
+		gScope = ""
+	end
 end
 
 --------------------------------------------------------------------------
@@ -165,19 +202,37 @@ function remote_process_midi(event)
 	-- re-emit it as a Keyboard note (item 1). The raw pad note is consumed so
 	-- it never reaches the Keyboard auto-inputs; non-pad notes fall through
 	-- (return false) and keep flowing to the keybed auto-inputs.
+	-- In the same breath each pad press drives its matching Pad 1..16 item so
+	-- a scope can bind pads per device (Dr. Octo Rex: Bank A -> Select Loop
+	-- 1-8, Bank B pad 1 -> Run). The drum-note re-emission is skipped for any
+	-- scope listed in gSuppressPadNotes.
 	ret = remote.match_midi("<100x>? yy zz", event)
 	if ret ~= nil then
 		local PadNum = gPadNoteLookup[ret.y]
 		if PadNum ~= nil then
 			-- ret.x = 1 for note-on (status 0x9?), 0 for note-off (0x8?).
 			local OnOff = (ret.x ~= 0 and ret.z > 0) and 1 or 0
+			-- Also drive the matching Pad 1..16 item (index 3 + PadNum - 1),
+			-- so a .remotemap can bind individual pads per device (e.g. the
+			-- Dr. Octo Rex scope maps Bank A to Select Loop 1-8 and Bank B
+			-- pad 1 to Run). Devices that do not map these items ignore them.
 			remote.handle_input({
 				time_stamp = event.time_stamp,
-				item = 1,               -- Keyboard item
+				item = 2 + PadNum,      -- Pad 1 is index 3
 				value = OnOff,
-				note = 35 + PadNum,     -- Kong/Redrum drum note 36..51
-				velocity = ret.z,
 			})
+			-- Re-emit as a Keyboard drum note so Kong/Redrum play - unless the
+			-- focused scope is in gSuppressPadNotes, in which case the pad
+			-- only drives its Pad item (e.g. Dr. Octo Rex Select Loop / Run).
+			if not gSuppressPadNotes[gScope] then
+				remote.handle_input({
+					time_stamp = event.time_stamp,
+					item = 1,               -- Keyboard item
+					value = OnOff,
+					note = 35 + PadNum,     -- Kong/Redrum drum note 36..51
+					velocity = ret.z,
+				})
+			end
 			return true
 		end
 	end
