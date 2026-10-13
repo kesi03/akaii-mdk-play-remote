@@ -12,17 +12,27 @@
         Maps/Akai/*.remotemap
             -> <ProgramData>\Propellerhead Software\Remote\Maps\Akai\
 
+    With -Backup, every file that is about to be overwritten is first copied
+    into <repo>\backups\<timestamp>\ (same folder structure), so a bad deploy
+    can be rolled back. The backups folder is git-ignored.
+
     Reason must be closed before running. Restart Reason afterwards and add
     the surface manually: Preferences > Control Surfaces > Add > Akai > MPK Mini Play.
+
+.PARAMETER Backup
+    Back up the current Reason Remote files before overwriting them.
 #>
 
 [CmdletBinding()]
-param()
+param(
+    [switch]$Backup
+)
 
 $ErrorActionPreference = 'Stop'
 
-$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+$RepoRoot   = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $RemoteRoot = Join-Path $env:ProgramData 'Propellerhead Software\Remote'
+$BackupRoot = Join-Path $RepoRoot 'backups'
 
 $CodecDest = Join-Path $RemoteRoot 'Codecs\Lua Codecs\Akai'
 $MapsDest  = Join-Path $RemoteRoot 'Maps\Akai'
@@ -42,18 +52,44 @@ if ($foundMaps.Count -eq 0) {
     throw "No .remotemap files found in $RepoRoot\Maps\Akai\"
 }
 
+# --- optional backup of the files that will be overwritten ----------------
+$backupRunDir = Join-Path $BackupRoot (Get-Date -Format 'yyyyMMdd-HHmmss')
+$backedUp = @()
+
+function Backup-One([string]$Path) {
+    if (-not $Backup) { return }
+    if (-not (Test-Path -LiteralPath $Path)) { return }
+    $rel = $Path.Substring($RemoteRoot.Length).TrimStart('\', '/')
+    $target = Join-Path $backupRunDir $rel
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $target) | Out-Null
+    Copy-Item -LiteralPath $Path -Destination $target -Force
+    $script:backedUp += $rel
+}
+
 Write-Host "Deploying to: $RemoteRoot" -ForegroundColor Cyan
 
 New-Item -ItemType Directory -Force -Path $CodecDest, $MapsDest | Out-Null
 
 foreach ($codec in $codecFiles) {
-    Copy-Item -LiteralPath $codec.FullName -Destination $CodecDest -Force
-    Write-Host "  Codec  -> $CodecDest\$($codec.Name)" -ForegroundColor Green
+    $dest = Join-Path $CodecDest $codec.Name
+    Backup-One $dest
+    Copy-Item -LiteralPath $codec.FullName -Destination $dest -Force
+    Write-Host "  Codec  -> $dest" -ForegroundColor Green
 }
 
 foreach ($map in $foundMaps) {
-    Copy-Item -LiteralPath $map.FullName -Destination $MapsDest -Force
-    Write-Host "  Map    -> $MapsDest\$($map.Name)" -ForegroundColor Green
+    $dest = Join-Path $MapsDest $map.Name
+    Backup-One $dest
+    Copy-Item -LiteralPath $map.FullName -Destination $dest -Force
+    Write-Host "  Map    -> $dest" -ForegroundColor Green
+}
+
+if ($Backup) {
+    if ($backedUp.Count -gt 0) {
+        Write-Host "Backed up $($backedUp.Count) file(s) to $backupRunDir" -ForegroundColor Yellow
+    } else {
+        Write-Host "Backup: no existing target files to back up (nothing overwritten)." -ForegroundColor Yellow
+    }
 }
 
 Write-Host ""

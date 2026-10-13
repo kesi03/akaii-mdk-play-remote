@@ -12,3 +12,6 @@ Thumbs.db
 *.zip
 dist/
 build/
+
+# Local deploy backups (written by scripts/deploy*.ps1 -Backup)
+backups/
