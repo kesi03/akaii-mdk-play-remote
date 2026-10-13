@@ -53,7 +53,7 @@ The MPK Mini Play exposes the following controls (see
 
 | Control        | Physical               | MIDI                        |
 |----------------|------------------------|-----------------------------|
-| Keyboard       | 25 velocity keys       | Notes 48\u201372                |
+| Keyboard       | 25 velocity keys       | Notes 48               |
 | Pads ×16       | 8 pads, 2 banks        | Bank A: notes 16–23 · Bank B: notes 32–39 → drum notes 36–51 (Dr. Octo Rex: loops 1–8 / Run) |
 | Knobs ×8       | 4 knobs, 2 banks       | Bank A: CC48-51 · Bank B: CC64-67 |
 | Joystick X     | Joystick horizontal    | Pitch Bend                  |
