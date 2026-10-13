@@ -1,6 +1,7 @@
 ﻿"TestFile","Device","TotalSteps","Result","FailedSteps","Notes"
 "combinator2-test.md","Combinator 2","16","","",""
 "dr-octo-rex-test.md","Dr. Octo Rex Loop Player","18","","",""
+"drum-sequencer-test.md","Drum Sequencer","17","","",""
 "europa-test.md","Europa Shapeshifting Synthesizer","18","","",""
 "grain-test.md","Grain Sample Manipulator","18","","",""
 "humana-test.md","Humana Vocal Ensemble","18","","",""

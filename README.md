@@ -42,7 +42,8 @@ The codec turns raw MIDI into named control events; the `.remotemap` binds
 those control names to each device's **Scope** and remotable items. The codec
 also keeps a small device-aware layer: it reads the focused scope from the
 `_Scope` item so pads can behave differently per device (see
-[Dr. Octo Rex](docs/dr-octo-rex.md#how-the-pads-work-on-dr-octo-rex)).
+[Dr. Octo Rex](docs/dr-octo-rex.md#how-the-pads-work-on-dr-octo-rex) and
+[Drum Sequencer](docs/drum-sequencer.md#how-the-pads-work-on-the-drum-sequencer)).
 
 ## Hardware profile
 
@@ -143,6 +144,7 @@ row below lists the Reason **Scope** that file maps for that device.
 | Kong Drum Designer  | Propellerheads / Kong Drum Designer | drums 36–51 | Master + Bus/FX | pitch/mod | ✓ |
 | Redrum              | Propellerheads / Redrum Drum Computer | drums 36–51 | Levels/Pans | n/a (override) | ✓ |
 | Dr. Octo Rex        | Propellerheads / Dr.REX Loop Player | loops 1–8 / Run | Level/Transpose + LFO | pitch/mod | ✓ |
+| Drum Sequencer      | Propellerhead Software / se.propellerheads.DrumSeq | patterns 1–8 / Record+Play | — | pitch/mod | ✓ |
 | SubTractor          | Propellerheads / SubTractor Analog Synthesizer | drums 36–51 | Filter/Env | pitch/mod | ✓ |
 | Thor                | Propellerheads / THOR Polysonic Synthesizer | drums 36–51 | Filters/Env | pitch/mod | ✓ |
 | NN-XT               | Propellerheads / NN-XT Advanced Sampler | drums 36–51 | Filter/Amp | pitch/mod | ✓ |
@@ -163,9 +165,11 @@ row below lists the Reason **Scope** that file maps for that device.
 
 The **Pads →** column is device-agnostic by default: every device receives the
 same drum notes 36–51, so Kong and Redrum play the pads directly while other
-devices ignore them. **Dr. Octo Rex** is the one exception — its pads select
-loops 1–8 / toggle Run instead of sending notes (see [Dr. Octo Rex
-pads](docs/dr-octo-rex.md#how-the-pads-work-on-dr-octo-rex)).
+devices ignore them. **Dr. Octo Rex** and the **Drum Sequencer** are the
+exceptions — their pads select loops 1–8 / toggle Run, or pick patterns 1–8 /
+toggle Record+Play, instead of sending notes (see [Dr. Octo Rex
+pads](docs/dr-octo-rex.md#how-the-pads-work-on-dr-octo-rex) and [Drum Sequencer
+pads](docs/drum-sequencer.md#how-the-pads-work-on-the-drum-sequencer)).
 
 Notes:
 
@@ -187,10 +191,13 @@ Notes:
   remaining knob slots ship commented for Remote Overrides.
 - **Pads** are device-agnostic by default: they send Reason drum notes 36–51
   through the Keyboard item, so Kong/Redrum play them and other devices ignore
-  them. **Dr. Octo Rex** is the exception: its pads are mapped per device
-  (Bank A pads 1-8 → loops 1-8, Bank B pad 1 → Run) and the codec suppresses
-  their drum notes via `gSuppressPadNotes` so they do not also play. See the
-  [Dr. Octo Rex page](docs/dr-octo-rex.md#how-the-pads-work-on-dr-octo-rex).
+  them. **Dr. Octo Rex** and the **Drum Sequencer** are the exceptions: their
+  pads are mapped per device (Dr. Octo Rex: Bank A pads 1-8 → loops 1-8, Bank B
+  pad 1 → Run; Drum Sequencer: Bank A pads 1-8 → patterns 1-8, Bank B pads 1-2
+  → Record/Play) and the codec suppresses their drum notes via
+  `gSuppressPadNotes` so they do not also play. See the [Dr. Octo Rex
+  page](docs/dr-octo-rex.md#how-the-pads-work-on-dr-octo-rex) and the
+  [Drum Sequencer page](docs/drum-sequencer.md#how-the-pads-work-on-the-drum-sequencer).
 - **Radical Keys** uses the CamelCase device ID
   `se.propellerheads.RadicalKeys` (note: *Radical Piano* is lowercase,
   `se.propellerheads.radicalpiano`). Its remote item names follow the Reason
@@ -216,8 +223,10 @@ the control‑map picture, the MIDI binding of every control, the Reason
   drum device (Kong, Redrum) plays them directly; other devices ignore them.
   The codec can also emit a mappable Pad item per press, and a device can opt
   into per-device pad mapping with note suppression (Dr. Octo Rex: Bank A →
-  loops 1-8, Bank B pad 1 → Run). See
-  [Dr. Octo Rex pads](docs/dr-octo-rex.md#how-the-pads-work-on-dr-octo-rex).
+  loops 1-8, Bank B pad 1 → Run; Drum Sequencer: Bank A → patterns 1-8, Bank B
+  pad 1-2 → Record/Play). See
+  [Dr. Octo Rex pads](docs/dr-octo-rex.md#how-the-pads-work-on-dr-octo-rex) and
+  [Drum Sequencer pads](docs/drum-sequencer.md#how-the-pads-work-on-the-drum-sequencer).
 - **Knob bank A** (CC48-51) → the "four most‑edited" parameters of the device.
 - **Knob bank B** (CC64-67) → the second layer: envelopes, sends, pans.
 - **Joystick X** → pitch bend (global). **Joystick Y** → mod wheel (CC16).
@@ -242,6 +251,7 @@ Work through the per‑device test suites under [`tests/`](tests/):
 - [Kong](tests/kong-test.md)
 - [Redrum](tests/redrum-test.md)
 - [Dr. Octo Rex](tests/dr-octo-rex-test.md)
+- [Drum Sequencer](tests/drum-sequencer-test.md)
 - [SubTractor](tests/subtractor-test.md)
 - [Thor](tests/thor-test.md)
 - [NN-XT](tests/nnxt-test.md)
@@ -393,9 +403,9 @@ mapping overlay can be added on request.
 ## License / credits
 
 - Reason, Kong, Redrum, SubTractor, Thor, NN-XT, NN-19, Combinator, Dr. Octo Rex,
-  Europa, Grain, Rytmik, Malstrom, Monotone, Radical Piano, Radical Keys,
-  ID8, Klang, Pangea, Humana, and the Remote system are trademarks of Reason
-  Studios (formerly Propellerhead).
+  Drum Sequencer, Europa, Grain, Rytmik, Malstrom, Monotone, Radical Piano,
+  Radical Keys, ID8, Klang, Pangea, Humana, and the Remote system are trademarks
+  of Reason Studios (formerly Propellerhead).
 - Inspired by the folder layout of
   [Livid Instruments ReasonRemoteScripts](https://github.com/LividInstruments/ReasonRemoteScripts).
 - Built for the AKAI MPK Mini Play MIDI controller.
