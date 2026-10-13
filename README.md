@@ -394,7 +394,16 @@ Screen + Encoder
 | KEYBOARD: Notes 48\u201372                                            |
 +-----------------------------------------------------------------------+
 ```
+# Lua
+The official Lua website is:
 
+🔗 https://www.lua.org/ - The Programming Language Lua
+
+Useful pages:
+
+Getting Started: https://www.lua.org/start.html
+Documentation / Reference Manual: https://www.lua.org/docs.html
+Download Lua: https://www.lua.org/download.html
 
 ## License / credits
 
