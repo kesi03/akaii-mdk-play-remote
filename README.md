@@ -53,7 +53,7 @@ also keeps a small device-aware layer: it reads the focused scope from the
 
 ## Hardware profile
 
-![Akai MPK Mini Play keyboard and control layout](docs/keyboard.png)
+![Akai MPK Mini Play keyboard and control layout](docs/akai-mini-play.png)
 
 The MPK Mini Play exposes the following controls (see
 [`mapping/mpk-mini-play-controls.json`](mapping/mpk-mini-play-controls.json)):
