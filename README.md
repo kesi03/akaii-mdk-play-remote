@@ -279,7 +279,7 @@ different purpose. All are plain monospaced text (no image files).
 |-----------------------------------------------------------------------|
 | JOYSTICK (Pitch/Mod)                                                  |
 |                                                                       |
-|        ^  Y (Mod CC16)                                                 |
+|        ^  Y (Mod CC16)                                                |
 |        |                                                              |
 |    <-- + --> X (Pitch Bend)                                           |
 |                                                                       |
@@ -298,9 +298,9 @@ different purpose. All are plain monospaced text (no image files).
 |    +---------+---------+---------+---------+                          |
 |                                                                       |
 |-----------------------------------------------------------------------|
-| SCREEN + ENCODER                                                     |
+| SCREEN + ENCODER                                                      |
 |                                                                       |
-|   [LCD Display]   [Data Dial]                                        |
+|   [LCD Display]   [Data Dial]                                         |
 |                                                                       |
 +-----------------------------------------------------------------------+
 ```
@@ -310,8 +310,8 @@ different purpose. All are plain monospaced text (no image files).
 ```
 +-------------------+     +---------------------------+
 |     Joystick      |     |        Knobs 1–4          |
-|  X = Pitch Bend   |     |  Bank A/B CC48-51/CC64-67         |
-|  Y = Mod (CC16)    |     +---------------------------+
+|  X = Pitch Bend   |     |  Bank A/B CC48-51/CC64-67 |
+|  Y = Mod (CC16)   |     +---------------------------+
 +-------------------+     | Knob Bank Switch          |
                           +---------------------------+
 
@@ -323,7 +323,8 @@ different purpose. All are plain monospaced text (no image files).
 +-------------------+     +---------------------------+
 |      Pads         |     |       Keyboard            |
 |  P1–P8 (A/B)      |     |   25 Velocity Keys        |
-|  Notes 16–23 / 32–39      |     |   Notes 48\u201372            |
+|  Notes 16–23      |     |       Notes 48            |
+|        32–39      |     |                           |
 +-------------------+     +---------------------------+
 
 +-------------------+
@@ -380,7 +381,7 @@ Screen + Encoder
 
 ```
 +-----------------------------------------------------------------------+
-| JOYSTICK: X = Pitch Bend, Y = CC16 (Mod Wheel)                         |
+| JOYSTICK: X = Pitch Bend, Y = CC16 (Mod Wheel)                        |
 |                                                                       |
 | KNOBS:                                                                |
 |   Bank A: K1=CC48 K2=CC49 K3=CC50 K4=CC51                             |
@@ -390,12 +391,10 @@ Screen + Encoder
 |   Bank A: P1=16 P2=17 P3=18 P4=19 P5=20 P6=21 P7=22 P8=23             |
 |   Bank B: P1=32 P2=33 P3=34 P4=35 P5=36 P6=37 P7=38 P8=39             |
 |                                                                       |
-| KEYBOARD: Notes 48\u201372                                                |
+| KEYBOARD: Notes 48\u201372                                            |
 +-----------------------------------------------------------------------+
 ```
 
-Want more? Ultra‑compact, wide-format, keyboard-only, or a per-device
-mapping overlay can be added on request.
 
 ## License / credits
 
