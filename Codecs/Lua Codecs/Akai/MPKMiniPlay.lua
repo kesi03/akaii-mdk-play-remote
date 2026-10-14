@@ -100,8 +100,9 @@ gSuppressPadNotes = {
 -- ID8 (stock instrument) exposes its current sound category as text. The ID8
 -- scope maps ID8's "Category Name" remote item onto the "ID8 Category" surface
 -- item below. When an ID8 is focused and its category is Drums we retarget the
--- Bank A pads to a General MIDI core drum kit (ID8's drum patches are General
--- MIDI mapped); any other category keeps the normal chromatic pad notes.
+-- pads to General MIDI drum sounds (ID8's drum patches are General MIDI
+-- mapped): Bank A plays the core kit, Bank B plays percussion. Any other
+-- category keeps the normal chromatic pad notes.
 gId8CategoryItemIndex = 29 -- "ID8 Category" is the last item in define_items()
 gId8Category = ""
 gId8DrumNotes = {
@@ -113,6 +114,16 @@ gId8DrumNotes = {
 	51, -- Pad 6  Ride Cymbal 1
 	50, -- Pad 7  High Tom
 	45, -- Pad 8  Low Tom
+}
+gId8PercussionNotes = {
+	62, -- Pad 9  Mute Hi Conga
+	63, -- Pad 10 Open Hi Conga
+	54, -- Pad 11 Tambourine
+	56, -- Pad 12 Cowbell
+	70, -- Pad 13 Maracas
+	75, -- Pad 14 Claves
+	61, -- Pad 15 Low Bongo
+	77, -- Pad 16 Low Wood Block
 }
 
 --------------------------------------------------------------------------
@@ -255,13 +266,17 @@ function remote_process_midi(event)
 			-- only drives its Pad item (e.g. Dr. Octo Rex Select Loop / Run).
 			if not gSuppressPadNotes[gScope] then
 				-- Default target is the chromatic Kong/Redrum note 36..51.
-				-- On an ID8 whose category is Drums, Bank A pads are converted
-				-- instead to the General MIDI core kit (gId8DrumNotes): the
-				-- raw pad note (16-23) becomes the matching GM drum note.
+				-- On an ID8 whose category is Drums, whose pads are GM-mapped,
+				-- Bank A pads play the core kit and Bank B pads play percussion
+				-- (gId8DrumNotes / gId8PercussionNotes) instead.
 				local outNote = 35 + PadNum
-				if PadNum <= 8 and gScope == "ID8"
+				if gScope == "ID8"
 					and string.find(string.lower(gId8Category), "drum", 1, true) ~= nil then
-					outNote = gId8DrumNotes[PadNum]
+					if PadNum <= 8 then
+						outNote = gId8DrumNotes[PadNum]
+					else
+						outNote = gId8PercussionNotes[PadNum - 8]
+					end
 				end
 				remote.handle_input({
 					time_stamp = event.time_stamp,

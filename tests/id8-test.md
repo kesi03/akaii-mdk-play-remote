@@ -10,7 +10,7 @@ Device under test: **Akai MPK Mini Play** → **ID8** (`Maps/Akai/MPKMiniPlay.re
    3 Parameter 2   4 (unmapped)   3 (unmapped)   4 (unmapped)
 
    Pads     : drum notes 36-51 (Bank A 36-43, Bank B 44-51); in the Drums
-              category Bank A plays the GM core kit
+              category Bank A plays the GM core kit and Bank B percussion
    Joystick : unmapped
    Keyboard : notes 48-72 (velocity)
 ```
@@ -41,7 +41,8 @@ Device under test: **Akai MPK Mini Play** → **ID8** (`Maps/Akai/MPKMiniPlay.re
 | 3 | Set ID8 category to **Drums** (rack Category selector, or Select Next/Previous Category) | Category Name reports "Drums" (Knob/pad scope stays on ID8) | ☐ |
 | 4 | Tap Bank A pads 1-8 | GM core kit: 36 kick, 38 snare, 42 closed hat, 46 open hat, 49 crash, 51 ride, 50 high tom, 45 low tom | ☐ |
 | 5 | Set category back to a melodic one (e.g. Piano) and tap Bank A pads | Default chromatic notes 36-43 again (no drum special-casing) | ☐ |
-| 6 | Tap Bank B pads while category is Drums | Unchanged: notes 44-51 | ☐ |
+| 6 | Tap Bank B pads while category is Drums | GM percussion: 62 mute hi conga, 63 open hi conga, 54 tambourine, 56 cowbell, 70 maracas, 75 claves, 61 low bongo, 77 low wood block | ☐ |
+| 7 | Set category to a melodic one and tap Bank B pads | Default chromatic notes 44-51 | ☐ |
 
 ## 3. Knob A/B switching
 
